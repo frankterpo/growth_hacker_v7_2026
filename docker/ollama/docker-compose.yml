@@ -1,0 +1,22 @@
+# Ollama for Hermes (OpenAI-compatible API at http://127.0.0.1:11434/v1).
+# Reuses your existing models from ~/.ollama on the host.
+#
+# Before first up: stop anything else bound to 11434 (native Ollama, llama.cpp server, etc.)
+#
+#   docker compose -f docker/ollama/docker-compose.yml up -d
+#   docker compose -f docker/ollama/docker-compose.yml exec ollama ollama ps
+#
+# Apple Silicon: linux/arm64. Intel Mac: remove `platform` or use linux/amd64.
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    platform: linux/arm64
+    container_name: hermes-ollama
+    ports:
+      - "127.0.0.1:11434:11434"
+    volumes:
+      - ${HOME}/.ollama:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    restart: unless-stopped

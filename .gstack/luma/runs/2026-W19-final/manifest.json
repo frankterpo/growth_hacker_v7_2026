@@ -1,0 +1,14 @@
+{
+  "featured_place_api_ids": [
+    "discplace-QCcNk3HXowOR97j"
+  ],
+  "categories": [
+    "cat-ai",
+    "cat-tech"
+  ],
+  "pagination_limit": 50,
+  "places_scanned": 1,
+  "requests": 3,
+  "rows_written": 100,
+  "dedup_skipped": 0
+}

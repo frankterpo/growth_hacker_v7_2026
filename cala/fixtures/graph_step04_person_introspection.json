@@ -1,0 +1,1 @@
+{"properties":["github_url","place_of_birth","aliases","description","linkedin_url","imdb_url","name","birth_date","personal_website","id"],"relationships":{"outgoing":["IS_BOARD_MEMBER_OF","WORKS_AT","IS_MEMBER_OF","FEATURED_IN","STUDIED_AT","RECEIVED_AWARD","FOUNDED","IS_CEO_OF","HAS_NATIONALITY"],"incoming":[]},"numerical_observations":{}}

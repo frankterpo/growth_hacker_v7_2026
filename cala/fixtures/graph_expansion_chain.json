@@ -1,0 +1,88 @@
+{
+  "walkthrough": "Stripe-centered graph expansion (live run)",
+  "executed_at": "2026-05-12",
+  "base_url": "https://api.cala.ai",
+  "hermes_loop": [
+    "SEED: entity_search(name, entity_types) → anchor UUID (cheap, <1s).",
+    "SCHEMA: GET /v1/entities/{id}/introspection → learn property + relationship keys for this node type (cheap).",
+    "EXPAND: POST /v1/entities/{id} with targeted relationships → collect neighbor UUIDs from edges (cheap).",
+    "PIVOT: partition frontier by entity_type; for each Person/Company/Organization of interest, repeat SCHEMA→EXPAND.",
+    "OVERLAY (optional, slow ~45–55s): POST /v1/knowledge/query or /v1/knowledge/search → merge response.entities[] into frontier; each UUID is one introspection away from full structure.",
+    "REPEAT until time/token budget; treat Cala as an on-demand edge materialization API, not a single-shot answer."
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "endpoint": "GET /v1/entities",
+      "purpose": "Resolve company name to canonical graph anchor",
+      "fixture": "graph_step01 implied in graph_step03 (search inline)",
+      "request_summary": "name=Stripe, entity_types=Company, limit=1",
+      "anchor_id": "8a8b44f3-8769-46aa-8af8-d96c55a031b5",
+      "anchor_name": "STRIPE, LLC"
+    },
+    {
+      "step": 2,
+      "endpoint": "GET /v1/entities/{id}/introspection",
+      "purpose": "Discover which relationships exist before paying for retrieve payload",
+      "fixture": "graph_step02_stripe_introspection.json"
+    },
+    {
+      "step": 3,
+      "endpoint": "POST /v1/entities/{id}",
+      "purpose": "Materialize people + industries + investors attached to company",
+      "fixture": "graph_step03_stripe_retrieve.json",
+      "relationships_requested": {
+        "outgoing": ["OPERATES_IN_INDUSTRY", "HAS_HEADQUARTERS_IN"],
+        "incoming": ["IS_CEO_OF", "FOUNDED", "IS_BOARD_MEMBER_OF", "INVESTED_IN"]
+      },
+      "example_person_id_from_edges": "64fcbd4f-7e65-4dd1-a610-8efc1f88befb",
+      "example_person_name": "Patrick Collison"
+    },
+    {
+      "step": 4,
+      "endpoint": "GET /v1/entities/{person_id}/introspection",
+      "purpose": "Person schema differs from Company — introspect before querying person edges",
+      "fixture": "graph_step04_person_introspection.json"
+    },
+    {
+      "step": 5,
+      "endpoint": "POST /v1/entities/{person_id}",
+      "purpose": "Expand person → other employers, CEO roles, founded companies",
+      "fixture": "graph_step05_person_retrieve.json",
+      "notable_neighbor_ids": {
+        "Arc Institute": "3d3522a4-a048-4d92-8eb0-b3438f819b8f",
+        "Auctomatic": "a540d509-0e8e-432c-9d24-38c050f6a634",
+        "Stripe LLC_duplicate_entity": "a0f7b829-db92-4021-8981-8488c22e1138"
+      }
+    },
+    {
+      "step": 6,
+      "endpoint": "GET /v1/entities/{org_id}/introspection",
+      "purpose": "Second-hop anchor (Organization) — same SCHEMA→EXPAND pattern",
+      "fixture": "graph_step06_arc_introspection.json",
+      "org_id": "3d3522a4-a048-4d92-8eb0-b3438f819b8f"
+    },
+    {
+      "step": 7,
+      "endpoint": "POST /v1/entities/{org_id}",
+      "purpose": "Walk back people linked to Arc Institute",
+      "fixture": "graph_step07_arc_retrieve.json"
+    },
+    {
+      "step": 8,
+      "endpoint": "POST /v1/knowledge/query",
+      "purpose": "Broad discovery: typed rows + parallel entities[] UUIDs to enqueue",
+      "fixture": "graph_step08_knowledge_query.json",
+      "request_summary": "input=companies.industry=financial technology.founded_year>=2010, return_entities=true",
+      "counts": { "results": 20, "entities": 30 },
+      "id_dedup_lesson": "Query returned Stripe as Organization id b0154950-36cd-4d82-8473-d9119f4751c5 while entity_search returned STRIPE LLC 8a8b44f3-8769-46aa-8af8-d96c55a031b5 — same real company, different nodes; Hermes should merge by human judgment or prefer graph-consistency from one path."
+    },
+    {
+      "step": 9,
+      "endpoint": "GET /v1/entities/{id}/introspection + POST /v1/entities/{id}",
+      "purpose": "Pick any entity UUID from step 8 entities[] and deepen one hop (Wise example)",
+      "fixtures": ["graph_step09_wise_introspection.json", "graph_step10_wise_retrieve.json"],
+      "wise_id": "f118df40-7adc-4f21-b6a9-c28271b11629"
+    }
+  ]
+}

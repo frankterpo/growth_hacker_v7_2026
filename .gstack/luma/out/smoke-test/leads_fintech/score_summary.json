@@ -1,0 +1,21 @@
+{
+  "in": ".gstack/luma/out/smoke-test/events_hydrated.jsonl",
+  "out_dir": ".gstack/luma/out/smoke-test/leads_fintech",
+  "topic_pack": "fintech",
+  "topic_pack_buckets": [
+    "payments",
+    "embedded_finance",
+    "neobank",
+    "regtech_compliance",
+    "crypto_defi",
+    "enterprise_ai_for_finance"
+  ],
+  "events_scored": 99,
+  "events_with_topics": 3,
+  "leads_orgs": 3,
+  "leads_people": 5,
+  "top_topics": {
+    "payments": 2,
+    "regtech_compliance": 1
+  }
+}

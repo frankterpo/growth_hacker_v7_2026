@@ -1,0 +1,58 @@
+{
+  "name": "fintech",
+  "description": "Fintech-only pack — payments, embedded finance, neobanks, regtech. Drops the institutional/PE buckets entirely.",
+  "topics": {
+    "payments": {
+      "weight": 4,
+      "patterns": [
+        "\\bpayment(s|\\s+rails?)?\\b",
+        "\\bACH\\b",
+        "\\bSEPA\\b",
+        "\\bcard\\s+(issu(ing|er)|network)\\b",
+        "\\bopen\\s+banking\\b",
+        "\\bPSP\\b"
+      ]
+    },
+    "embedded_finance": {
+      "weight": 4,
+      "patterns": [
+        "\\bembedded\\s+(finance|lending|insurance|payments)\\b",
+        "\\bBaaS\\b",
+        "\\bbanking[-\\s]as[-\\s]a[-\\s]service\\b"
+      ]
+    },
+    "neobank": {
+      "weight": 3,
+      "patterns": [
+        "\\bneobank(s)?\\b",
+        "\\bchallenger\\s+bank(s)?\\b",
+        "\\bdigital[-\\s]first\\s+bank(s)?\\b"
+      ]
+    },
+    "regtech_compliance": {
+      "weight": 3,
+      "patterns": [
+        "\\bKYC\\b", "\\bAML\\b", "\\bregtech\\b",
+        "\\bfraud\\s+(detection|prevention)\\b",
+        "\\btransaction\\s+monitoring\\b"
+      ]
+    },
+    "crypto_defi": {
+      "weight": 2,
+      "patterns": [
+        "\\bdefi\\b", "\\bstablecoin(s)?\\b",
+        "\\bcrypto\\s+(payments|treasury|trading)\\b",
+        "\\btokeni[sz]ation\\b"
+      ]
+    },
+    "enterprise_ai_for_finance": {
+      "weight": 2,
+      "patterns": [
+        "\\bdocument\\s+(intelligence|automation|AI)\\b",
+        "\\bunderwriting\\s+(automation|AI)\\b",
+        "\\bclaims\\s+(automation|AI)\\b",
+        "\\bIDP\\b"
+      ]
+    }
+  }
+}

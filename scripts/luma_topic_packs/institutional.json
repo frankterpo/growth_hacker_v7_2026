@@ -1,0 +1,83 @@
+{
+  "name": "institutional",
+  "description": "Default V7 GTM pack — private markets, allocators, asset management, plus enterprise-AI signals.",
+  "topics": {
+    "private_markets": {
+      "weight": 4,
+      "patterns": [
+        "\\bprivate\\s+market(s|\\s+data)?\\b",
+        "\\bprivate\\s+(equity|capital|credit|debt)\\b",
+        "\\bsecondaries\\b",
+        "\\bGP[-\\s]?led\\b",
+        "\\bbuyout(s|\\s+fund)?\\b",
+        "\\bdirect\\s+lending\\b"
+      ]
+    },
+    "institutional_lp": {
+      "weight": 4,
+      "patterns": [
+        "\\ballocator(s)?\\b",
+        "\\bLP[s]?\\b",
+        "\\blimited\\s+partner(s)?\\b",
+        "\\bfamily\\s+office(s)?\\b",
+        "\\bendowment(s)?\\b",
+        "\\bpension(s|\\s+fund(s)?)?\\b",
+        "\\bsovereign\\s+wealth\\b",
+        "\\binstitutional\\s+(investor(s)?|capital|allocation)\\b"
+      ]
+    },
+    "asset_management": {
+      "weight": 3,
+      "patterns": [
+        "\\basset\\s+(management|managers?|allocation)\\b",
+        "\\bwealth\\s+(management|managers?|tech)\\b",
+        "\\bAUM\\b",
+        "\\bRIA(s)?\\b",
+        "\\bmulti[-\\s]?asset\\b"
+      ]
+    },
+    "venture": {
+      "weight": 2,
+      "patterns": [
+        "\\bventure\\s+capital\\b",
+        "\\bVC(s)?\\b",
+        "\\bseed\\s+(round|stage)\\b",
+        "\\bSeries\\s+[A-D]\\b",
+        "\\bemerging\\s+manager(s)?\\b"
+      ]
+    },
+    "hedge_fund": {
+      "weight": 3,
+      "patterns": [
+        "\\bhedge\\s+fund(s)?\\b",
+        "\\bquant(s|\\s+fund(s)?)?\\b",
+        "\\blong[\\s/-]+short\\b",
+        "\\bsystematic\\s+trading\\b"
+      ]
+    },
+    "finance_generic": {
+      "weight": 2,
+      "patterns": [
+        "\\bfintech\\b",
+        "\\bfinancial\\s+services\\b",
+        "\\bcapital\\s+markets\\b",
+        "\\bM&A\\b",
+        "\\bIPO\\b",
+        "\\binvestment\\s+banking\\b"
+      ]
+    },
+    "enterprise_ai": {
+      "weight": 1,
+      "patterns": [
+        "\\benterprise\\s+AI\\b",
+        "\\bCIO\\b",
+        "\\bCDO\\b",
+        "\\bCTO\\b",
+        "\\bdata\\s+infrastructure\\b",
+        "\\bdata\\s+platform\\b",
+        "\\bunstructured\\s+data\\b",
+        "\\bdocument\\s+(intelligence|automation|AI)\\b"
+      ]
+    }
+  }
+}

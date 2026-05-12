@@ -1,0 +1,25 @@
+{
+  "in": ".gstack/luma/out/smoke-test/events_hydrated.jsonl",
+  "out_dir": ".gstack/luma/out/smoke-test/leads_institutional",
+  "topic_pack": "institutional",
+  "topic_pack_buckets": [
+    "private_markets",
+    "institutional_lp",
+    "asset_management",
+    "venture",
+    "hedge_fund",
+    "finance_generic",
+    "enterprise_ai"
+  ],
+  "events_scored": 99,
+  "events_with_topics": 31,
+  "leads_orgs": 30,
+  "leads_people": 122,
+  "top_topics": {
+    "venture": 20,
+    "enterprise_ai": 5,
+    "institutional_lp": 4,
+    "finance_generic": 4,
+    "private_markets": 2
+  }
+}

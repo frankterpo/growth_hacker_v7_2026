@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "ollama": {
+      "source": "rawveg/skillsforge-marketplace",
+      "sourceType": "github",
+      "skillPath": "ollama/SKILL.md",
+      "computedHash": "b16a5839b24ff7e4bbde7b46fde48a3a370c7a0d2d4a2a5568178b326eb44372"
+    }
+  }
+}

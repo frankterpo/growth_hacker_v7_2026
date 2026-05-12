@@ -1,0 +1,149 @@
+[
+  {
+    "slug": "abyss-solutions",
+    "brand_guess": "Abyss Solutions",
+    "story_url": "https://www.v7labs.com/customer-stories/abyss-solutions",
+    "story_title": "How Abyss uses V7 Darwin to advance critical infrastructure inspections",
+    "logo_alt": "Abyss Logo"
+  },
+  {
+    "slug": "alaris-acquisitions",
+    "brand_guess": "Alaris Acquisitions",
+    "story_url": "https://www.v7labs.com/customer-stories/alaris-acquisitions",
+    "story_title": "How Alaris Acquisitions Advanced M&A Deal Matching with V7 Go",
+    "logo_alt": "Alaris logo"
+  },
+  {
+    "slug": "cattleeye",
+    "brand_guess": "Cattleeye",
+    "story_url": "https://www.v7labs.com/customer-stories/cattleeye",
+    "story_title": "How CattleEye uses V7 Darwin to develop AI models 10x faster",
+    "logo_alt": "Cattle Eye Logo"
+  },
+  {
+    "slug": "centerline",
+    "brand_guess": "Centerline",
+    "story_url": "https://www.v7labs.com/customer-stories/centerline",
+    "story_title": "How Centerline increased productivity for diligence document processing by 35%",
+    "logo_alt": "Centerline logo"
+  },
+  {
+    "slug": "charter-auctions",
+    "brand_guess": "Charter Auctions",
+    "story_url": "https://www.v7labs.com/customer-stories/charter-auctions",
+    "story_title": "Why Charter Auctions Chose V7 Go to be the “Beating Heart” of Their Operations",
+    "logo_alt": null
+  },
+  {
+    "slug": "franklin-ai",
+    "brand_guess": "Franklin AI",
+    "story_url": "https://www.v7labs.com/customer-stories/franklin-ai",
+    "story_title": "How Franklin.ai created training data batches 95% faster with V7 Darwin",
+    "logo_alt": "Franklin AI logo"
+  },
+  {
+    "slug": "genmab",
+    "brand_guess": "Genmab",
+    "story_url": "https://www.v7labs.com/customer-stories/genmab",
+    "story_title": "How Genmab uses V7 Darwin to Speed up tumor detection in digital pathology images",
+    "logo_alt": "Genmab Logo"
+  },
+  {
+    "slug": "hiticco",
+    "brand_guess": "Hiticco",
+    "story_url": "https://www.v7labs.com/customer-stories/hiticco",
+    "story_title": "How HITICCO Automated 90% of Their Deep Prospect Research with V7 Go",
+    "logo_alt": null
+  },
+  {
+    "slug": "imidex",
+    "brand_guess": "Imidex",
+    "story_url": "https://www.v7labs.com/customer-stories/imidex",
+    "story_title": "How IMIDEX uses V7 Darwin to detect pulmonary nodules, indicative of lung cancer",
+    "logo_alt": "Imidex logo"
+  },
+  {
+    "slug": "informai",
+    "brand_guess": "Informai",
+    "story_url": "https://www.v7labs.com/customer-stories/informai",
+    "story_title": "How InformAI used V7 Darwin to build an organ volume estimation model achieving 97% accuracy",
+    "logo_alt": "InformAI logo"
+  },
+  {
+    "slug": "intelligent-ultrasound",
+    "brand_guess": "Intelligent Ultrasound",
+    "story_url": "https://www.v7labs.com/customer-stories/intelligent-ultrasound",
+    "story_title": "How Intelligent Ultrasound used V7 Darwin to double the speed of their training data pipelines",
+    "logo_alt": "Intelligend Ultrasound Logo"
+  },
+  {
+    "slug": "miovision",
+    "brand_guess": "Miovision",
+    "story_url": "https://www.v7labs.com/customer-stories/miovision",
+    "story_title": "How Miovision is using V7 Darwin to build smart cities",
+    "logo_alt": "Miovision Logo"
+  },
+  {
+    "slug": "mtc",
+    "brand_guess": "MTC",
+    "story_url": "https://www.v7labs.com/customer-stories/mtc",
+    "story_title": "How MTC is using V7 Darwin to build AI for sorting and segregating nuclear waste",
+    "logo_alt": "Manufacturing Technology Center MTC logo"
+  },
+  {
+    "slug": "raptor-maps",
+    "brand_guess": "Raptor Maps",
+    "story_url": "https://www.v7labs.com/customer-stories/raptor-maps",
+    "story_title": "How Raptor Maps uses V7 Darwin to reduce time-to-model by 83%",
+    "logo_alt": "Raptor Maps Logo"
+  },
+  {
+    "slug": "relos",
+    "brand_guess": "Relos",
+    "story_url": "https://www.v7labs.com/customer-stories/relos",
+    "story_title": "relos streamlines $100M in real estate transactions with V7 Go contract intelligence",
+    "logo_alt": null
+  },
+  {
+    "slug": "safari-ai",
+    "brand_guess": "Safari AI",
+    "story_url": "https://www.v7labs.com/customer-stories/safari-ai",
+    "story_title": "How Safari AI improved model accuracy and reduced time to delivery by 50% with V7 Darwin",
+    "logo_alt": "Safari AI logo"
+  },
+  {
+    "slug": "trent-services",
+    "brand_guess": "Trent Services",
+    "story_url": "https://www.v7labs.com/customer-stories/trent-services",
+    "story_title": "How Trent-Services Is Increasing Their Claims Processing Capacity By 25% With V7 Go",
+    "logo_alt": null
+  },
+  {
+    "slug": "university-of-lincoln",
+    "brand_guess": "University Of Lincoln",
+    "story_url": "https://www.v7labs.com/customer-stories/university-of-lincoln",
+    "story_title": "How University of Lincoln used V7 Darwin to achieve 95% AI model accuracy",
+    "logo_alt": "University of Lincoln logo"
+  },
+  {
+    "slug": "velmeni",
+    "brand_guess": "Velmeni",
+    "story_url": "https://www.v7labs.com/customer-stories/velmeni",
+    "story_title": "How Velmeni uses V7 Darwin to aid dental pathology detection",
+    "logo_alt": "Velmeni logo"
+  },
+  {
+    "slug": "vivan-therapeutics",
+    "brand_guess": "Vivan Therapeutics",
+    "story_url": "https://www.v7labs.com/customer-stories/vivan-therapeutics",
+    "story_title": "How Vivan Therapeutics uses V7 Darwin to provide drug screens to cancer patients faster",
+    "logo_alt": null
+  },
+  {
+    "slug": "yembo",
+    "brand_guess": "Yembo",
+    "story_url": "https://www.v7labs.com/customer-stories/yembo",
+    "story_title": "How Yembo transforms the home services industry with AI-powered virtual surveys with V7 Darwin",
+    "logo_alt": "Yembo AI logo"
+  }
+]
