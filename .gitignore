@@ -1,6 +1,7 @@
 .env
 .env.*
 !.env.example
+node_modules/
 .gstack/specter/
 __pycache__/
 *.pyc

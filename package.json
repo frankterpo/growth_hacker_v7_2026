@@ -1,0 +1,14 @@
+{
+  "name": "growth-hacker-v7",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "start": "serve public -n -l tcp://0.0.0.0:${PORT:-3000}"
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
