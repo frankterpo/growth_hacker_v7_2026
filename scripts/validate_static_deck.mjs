@@ -276,6 +276,49 @@ for (const phrase of [
   }
 }
 
+const fallbackBackRouteMatch = script.match(/function fallbackBackRoute\(\) \{\s*return routes\[currentIndex - 1\] \|\| null;\s*\}/);
+if (!fallbackBackRouteMatch) {
+  throw new Error("ArrowLeft fallback must walk the canonical deck route order.");
+}
+
+if (script.includes("routeHistory")) {
+  throw new Error("ArrowLeft must not use custom routeHistory that can bounce between slides.");
+}
+
+for (const phrase of ["function ensureBrowserBackGuard", "deckBackGuard", 'window.addEventListener("popstate"', "moveBack();"]) {
+  if (!script.includes(phrase)) {
+    throw new Error(`Missing browser-back deck navigation guard: ${phrase}`);
+  }
+}
+
+const simulatedBackSequence = [];
+let simulatedIndex = requiredRoutes.indexOf("ask");
+while (simulatedIndex > -1) {
+  simulatedBackSequence.push(requiredRoutes[simulatedIndex]);
+  simulatedIndex -= 1;
+}
+
+const expectedBackSequencePrefix = [
+  "ask",
+  "proof-tools",
+  "proof-hermes",
+  "proof-obsidian",
+  "proof",
+  "demo-trace",
+  "demo",
+  "account-proof",
+  "account",
+  "flywheel",
+  "route-depth",
+  "routes",
+];
+
+if (simulatedBackSequence.slice(0, expectedBackSequencePrefix.length).join("|") !== expectedBackSequencePrefix.join("|")) {
+  throw new Error(
+    `Back traversal regression from ask: ${simulatedBackSequence.slice(0, expectedBackSequencePrefix.length).join(" -> ")}`,
+  );
+}
+
 new vm.Script(scripts[0], { filename: "public/index.html:inline-script" });
 
 console.log("Static deck validation passed.");

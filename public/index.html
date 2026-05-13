@@ -3892,8 +3892,7 @@ primary_contact_id: ""</pre>
       const slides = Array.from(document.querySelectorAll(".slide"));
       const routes = slides.map((slide) => slide.dataset.route);
       let currentIndex = 0;
-      const routeHistory = [];
-      let isHistoryNavigation = false;
+      let hasBrowserBackGuard = false;
       const visitedStorageKey = "v7-proposal-map-visited";
       const maxVisitedSlideIndexKey = "v7-deck-max-visited-slide-index";
       const questMapCollapsedStorageKey = "quest-map-collapsed";
@@ -4306,6 +4305,20 @@ primary_contact_id: ""</pre>
         if (index !== -1) goTo(index);
       }
 
+      function currentRouteHash() {
+        return `#/${routes[currentIndex]}`;
+      }
+
+      function ensureBrowserBackGuard() {
+        if (currentIndex === 0) {
+          hasBrowserBackGuard = false;
+          return;
+        }
+        if (hasBrowserBackGuard) return;
+        history.pushState({ deckBackGuard: true }, "", currentRouteHash());
+        hasBrowserBackGuard = true;
+      }
+
       function currentQuestNode() {
         return questNodeByRoute.get(routes[currentIndex]);
       }
@@ -4362,25 +4375,10 @@ primary_contact_id: ""</pre>
       }
 
       function fallbackBackRoute() {
-        const node = currentQuestNode();
-        if (!node) return null;
-        if (node.route === "home") return null;
-        if (!node.parent) {
-          const peerIndex = topLevelNodes.findIndex((peer) => peer.route === node.route);
-          return topLevelNodes[peerIndex - 1]?.route || "home";
-        }
-        if (node.parent) return node.parent;
         return routes[currentIndex - 1] || null;
       }
 
       function moveBack() {
-        const previousRoute = routeHistory.pop();
-        if (previousRoute) {
-          isHistoryNavigation = true;
-          goToRoute(previousRoute);
-          return;
-        }
-
         const fallbackRoute = fallbackBackRoute();
         if (fallbackRoute) goToRoute(fallbackRoute);
       }
@@ -4388,12 +4386,6 @@ primary_contact_id: ""</pre>
       function goTo(index, replace = false) {
         if (modalOpen) return;
         const bounded = (index + slides.length) % slides.length;
-        const previousRoute = routes[currentIndex];
-        const nextRoute = routes[bounded];
-        if (!replace && !isHistoryNavigation && previousRoute && previousRoute !== nextRoute) {
-          routeHistory.push(previousRoute);
-        }
-        isHistoryNavigation = false;
         currentIndex = bounded;
 
         slides.forEach((slide, slideIndex) => {
@@ -4458,14 +4450,14 @@ primary_contact_id: ""</pre>
           );
         }
 
-        const nextHash = `#/${routes[currentIndex]}`;
         // Programmatic slide changes must not call `location.hash = …`; each assignment
-        // adds a browser history entry. ArrowLeft uses in-memory `routeHistory`, so a
-        // second "back" (browser Back / swipe) would pop to the prior hash and fight
-        // deck navigation (e.g. ask ↔ demo). replaceState updates the URL without stacking.
+        // adds a browser history entry. ArrowLeft is driven by canonical deck order, so
+        // replaceState keeps the URL in sync without a browser stack fighting the deck.
+        const nextHash = currentRouteHash();
         if (window.location.hash !== nextHash) {
           history.replaceState(null, "", nextHash);
         }
+        ensureBrowserBackGuard();
 
         updateQuestMapSeenUi();
       }
@@ -4487,11 +4479,24 @@ primary_contact_id: ""</pre>
       });
       window.addEventListener("hashchange", () => {
         if (modalOpen) {
-          const expected = `#/${routes[currentIndex]}`;
+          const expected = currentRouteHash();
           if (window.location.hash !== expected) history.replaceState(null, "", expected);
           return;
         }
         goTo(routeToIndex(window.location.hash), true);
+      });
+      window.addEventListener("popstate", () => {
+        if (modalOpen) {
+          const expected = currentRouteHash();
+          if (window.location.hash !== expected) history.replaceState(null, "", expected);
+          return;
+        }
+        if (currentIndex === 0) {
+          hasBrowserBackGuard = false;
+          return;
+        }
+        hasBrowserBackGuard = false;
+        moveBack();
       });
       window.addEventListener("keydown", (event) => {
         if (modalOpen) return;
