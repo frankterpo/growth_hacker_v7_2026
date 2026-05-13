@@ -1,0 +1,16 @@
+{
+  "name": "growth-hacker-v7",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "build": "node scripts/validate_static_deck.mjs",
+    "preview": "serve public -n -l tcp://0.0.0.0:${PORT:-4173}",
+    "start": "serve public -n -l tcp://0.0.0.0:${PORT:-3000}"
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

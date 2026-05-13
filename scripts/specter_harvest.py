@@ -6,7 +6,9 @@ Specter session harvest via Browser Use CLI:
 2) Exports cookies for curl-style replay.
 3) Records Performance API resource URLs (endpoint inventory).
 4) Attempts to capture a Clerk JWT via `window.Clerk.session.getToken()` (async) when Clerk is exposed.
-5) HTTP-probes a small set of candidate API URLs using the exported cookie header (read-only).
+5) HTTP-probes candidate URLs (GET from Performance entries) plus **POST** probes against the
+   Railway JSON API host (defaults to `specter-api-prod.up.railway.app` — override with
+   `SPECTER_RAILWAY_API_BASE` / `SPECTER_RAILWAY_POST_PATHS` in `.env`).
 
 Requires: `browser-use` on PATH or `SPECTER_BROWSER_USE_BIN`.
 
@@ -30,6 +32,7 @@ import os
 import stat
 import subprocess
 import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -281,28 +284,32 @@ def _pick_probe_urls(urls: list[str], *, limit: int) -> list[str]:
     return out
 
 
-def _http_probe(
+def _http_probe_request(
     url: str,
     cookie_header: str,
     *,
+    method: str = "GET",
     bearer: str | None = None,
-    timeout_s: float = 20.0,
+    json_body: str | None = None,
+    timeout_s: float = 25.0,
 ) -> dict[str, Any]:
     headers: dict[str, str] = {
-        "Cookie": cookie_header,
         "User-Agent": "specter-harvest/1.0 (+local research)",
         "Accept": "application/json, text/plain, */*",
     }
+    if cookie_header:
+        headers["Cookie"] = cookie_header
     if bearer:
         headers["Authorization"] = f"Bearer {bearer}"
-    req = urllib.request.Request(
-        url,
-        method="GET",
-        headers=headers,
-    )
+    m = method.upper()
+    data: bytes | None = None
+    if m == "POST":
+        headers["Content-Type"] = "application/json"
+        data = (json_body if json_body is not None else "{}").encode("utf-8")
+    req = urllib.request.Request(url, data=data, method=m, headers=headers)
     try:
         with urllib.request.urlopen(req, timeout=timeout_s) as resp:
-            body = resp.read(8000)
+            body = resp.read(12000)
             ctype = resp.headers.get("Content-Type", "")
             snippet = body.decode("utf-8", errors="replace")
             keys: list[str] | None = None
@@ -310,7 +317,7 @@ def _http_probe(
                 try:
                     parsed = json.loads(snippet)
                     if isinstance(parsed, dict):
-                        keys = sorted(list(parsed.keys()))[:40]
+                        keys = sorted(list(parsed.keys()))[:50]
                 except Exception:
                     keys = None
             return {
@@ -318,10 +325,44 @@ def _http_probe(
                 "status": getattr(resp, "status", None) or resp.getcode(),
                 "content_type": ctype,
                 "json_keys": keys,
-                "body_preview": snippet[:240].replace("\n", " "),
+                "body_preview": snippet[:320].replace("\n", " "),
             }
     except Exception as e:
-        return {"ok": False, "error": str(e)[:240]}
+        err = str(e)
+        # urllib wraps HTTP errors; still surface body when present
+        if isinstance(e, urllib.error.HTTPError):
+            try:
+                b = e.read(4000).decode("utf-8", errors="replace")
+                err = f"{err} | body: {b[:280]}"
+            except Exception:
+                pass
+        return {"ok": False, "error": err[:400]}
+
+
+def _http_probe(
+    url: str,
+    cookie_header: str,
+    *,
+    bearer: str | None = None,
+    timeout_s: float = 20.0,
+) -> dict[str, Any]:
+    return _http_probe_request(url, cookie_header, method="GET", bearer=bearer, timeout_s=timeout_s)
+
+
+def _railway_post_urls_from_env(env: dict[str, str]) -> list[str]:
+    base = (env.get("SPECTER_RAILWAY_API_BASE") or "https://specter-api-prod.up.railway.app").rstrip("/")
+    raw_paths = env.get("SPECTER_RAILWAY_POST_PATHS") or "/private/users/company-connections"
+    out: list[str] = []
+    for part in raw_paths.split(","):
+        p = part.strip()
+        if not p:
+            continue
+        if not p.startswith("/"):
+            p = "/" + p
+        u = f"{base}{p}"
+        if u not in out:
+            out.append(u)
+    return out
 
 
 def main() -> int:
@@ -490,16 +531,38 @@ def main() -> int:
     (out_dir / "cookie_header.len.txt").write_text(str(len(cookie_header)), encoding="utf-8")
 
     probe_urls = _pick_probe_urls([u for u in urls if isinstance(u, str)], limit=int(args.probe_limit))
+    railway_posts = _railway_post_urls_from_env(env)
     bearer: str | None = None
     if clerk_token_path.exists():
         bearer = clerk_token_path.read_text(encoding="utf-8").strip() or None
 
-    probe_out: dict[str, Any] = {"probed": [], "note": "GET probes only; some APIs require POST/GraphQL."}
+    probe_out: dict[str, Any] = {
+        "probed": [],
+        "note": "GET for discovered Performance URLs; many Specter/Railway JSON routes are POST-only (405 on GET).",
+    }
     for u in probe_urls:
-        probe_out["probed"].append({"url": u, "mode": "cookie", "result": _http_probe(u, cookie_header)})
+        probe_out["probed"].append({"url": u, "method": "GET", "mode": "cookie", "result": _http_probe(u, cookie_header)})
         if bearer:
             probe_out["probed"].append(
-                {"url": u, "mode": "cookie_plus_bearer", "result": _http_probe(u, cookie_header, bearer=bearer)}
+                {"url": u, "method": "GET", "mode": "cookie_plus_bearer", "result": _http_probe(u, cookie_header, bearer=bearer)}
+            )
+    for u in railway_posts:
+        probe_out["probed"].append(
+            {
+                "url": u,
+                "method": "POST",
+                "mode": "cookie",
+                "result": _http_probe_request(u, cookie_header, method="POST", bearer=None, json_body="{}"),
+            }
+        )
+        if bearer:
+            probe_out["probed"].append(
+                {
+                    "url": u,
+                    "method": "POST",
+                    "mode": "cookie_plus_bearer",
+                    "result": _http_probe_request(u, cookie_header, method="POST", bearer=bearer, json_body="{}"),
+                }
             )
     (out_dir / "probe_results.json").write_text(json.dumps(probe_out, indent=2), encoding="utf-8")
 
@@ -508,6 +571,7 @@ def main() -> int:
         "cookies_export": str(cookies_path),
         "resource_count": int(resources.get("count") or 0),
         "probe_candidates": probe_urls,
+        "railway_post_candidates": railway_posts,
         "skip_feed_wait": bool(args.skip_feed_wait),
         "clerk_fields": fields,
         "clerk_mount": st,

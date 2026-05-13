@@ -1,5 +1,13 @@
 # Specter lookup — one-time discovery + cron handoff
 
+**Hermes (terminal):** install the Specter skill into `~/.hermes` from this repo:
+
+```bash
+bash scripts/install_hermes_specter_skill.sh
+```
+
+Canonical skill files live in **`hermes/skills/research/hermes-specter-enrich/`** (source); the script rsyncs them to **`~/.hermes/skills/research/hermes-specter-enrich/`**. Re-run after edits. See also **`cala/AGENTS.md`** §0.1c operator skills.
+
 `scripts/specter_lookup.py` is the runtime adapter that lets the unified
 graph enricher (`luma_graph_enrich.py`) ask Specter "do you know this
 person / org?" using the **same authenticated browser session** that a
@@ -70,6 +78,29 @@ Specter's `__session` cookie expires. Schedule
 graph enricher cron tick. If it fails (login UI drift, MFA), the
 readiness check will flip to `not_ready` and the weekly cron will route
 the affected rows to `needs_review` rather than fabricate a `disregard`.
+
+## Railway JSON API (high-signal, POST-heavy)
+
+Specter’s SPA talks to a separate JSON host on Railway (example base:
+`https://specter-api-prod.up.railway.app`). Many routes are **POST-only**:
+a browser-style **GET** often returns **405** with `{"detail":"Method Not Allowed"}`.
+An unauthenticated **POST** typically returns **401** with
+`{"detail":"Invalid or expired token"}` — so replay needs a **valid Clerk JWT**
+(Authorization: `Bearer …`) and/or the same **browser cookie jar** the app uses.
+
+Example (discover payloads from DevTools → Network when you trigger the UI):
+
+- `POST https://specter-api-prod.up.railway.app/private/users/company-connections`
+
+After `specter_harvest.py` runs, check `.gstack/specter/probe_results.json`: it now
+includes **POST** probes for paths listed in `SPECTER_RAILWAY_POST_PATHS` (comma‑separated)
+against `SPECTER_RAILWAY_API_BASE` (defaults to the prod host above). Tune paths as you
+map more screens (products, traction, news, investor profiles, etc.).
+
+```bash
+SPECTER_RAILWAY_API_BASE=https://specter-api-prod.up.railway.app
+SPECTER_RAILWAY_POST_PATHS=/private/users/company-connections,/private/another/path
+```
 
 ## Step 3 — discover the search endpoint (one time)
 
