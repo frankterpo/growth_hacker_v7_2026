@@ -1859,7 +1859,7 @@
       }
 
       .cta-box {
-        max-width: 860px;
+        max-width: 980px;
         margin-inline: auto;
         padding: clamp(1.2rem, 3vw, 2rem);
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1900,14 +1900,14 @@
 
       .cta-evidence-table {
         width: 100%;
-        margin-top: 1.25rem;
+        margin-top: 1rem;
         border-collapse: collapse;
-        font-size: 0.84rem;
+        font-size: 0.76rem;
       }
 
       .cta-evidence-table th,
       .cta-evidence-table td {
-        padding: 0.52rem 0.6rem;
+        padding: 0.4rem 0.55rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.09);
         text-align: left;
         vertical-align: top;
@@ -1925,8 +1925,18 @@
 
       .cta-evidence-table td:first-child {
         color: var(--muted);
-        width: 34%;
+        width: 25%;
         overflow-wrap: anywhere;
+      }
+
+      .cta-evidence-table strong {
+        color: #fff;
+      }
+
+      .cta-evidence-table p {
+        margin: 0 0 0.28rem;
+        color: rgba(255, 255, 255, 0.72);
+        line-height: 1.34;
       }
 
       .cta-evidence-table a {
@@ -1939,6 +1949,25 @@
         color: rgba(255, 255, 255, 0.72);
         font-size: 0.93em;
         white-space: nowrap;
+      }
+
+      .cta-evidence-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.26rem;
+      }
+
+      .cta-evidence-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 1.32rem;
+        padding: 0.14rem 0.38rem;
+        border: 1px solid rgba(232, 199, 124, 0.34);
+        border-radius: 999px;
+        background: rgba(232, 199, 124, 0.08);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        text-decoration: none;
       }
 
       .cta-evidence-note {
@@ -3568,98 +3597,206 @@ primary_contact_id: ""</pre>
               and Nitter / X.
               <strong>Runtime:</strong> Docker-local Hermes, Telegram, Ollama, MCP tooling — Oracle Cloud path next.
             </p>
-            <table class="cta-evidence-table" aria-label="What is live: local paths and matching GitHub locations">
+            <table class="cta-evidence-table" aria-label="What is live: V7 GTM engine evidence and GitHub locations">
               <thead>
                 <tr>
                   <th scope="col">What's live</th>
-                  <th scope="col">Path / GitHub</th>
+                  <th scope="col">Evidence / GitHub</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Static proposal deck</td>
+                  <td><strong>Deck + validation</strong></td>
                   <td>
-                    <span class="cta-evidence-local">public/index.html</span>
-                    ·
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/public/index.html"
-                      target="_blank"
-                      rel="noreferrer"
-                      title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/public/index.html"
-                      >public/index.html on GitHub</a
-                    >
+                    <p>Single-file static proposal with build-time route, map, and provider-name regression checks.</p>
+                    <span class="cta-evidence-links">
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/public/index.html"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/public/index.html"
+                        >public/index.html</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/validate_static_deck.mjs"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/validate_static_deck.mjs"
+                        >validate_static_deck.mjs</a
+                      >
+                    </span>
                   </td>
                 </tr>
                 <tr>
-                  <td>Deck validation script</td>
+                  <td><strong>Obsidian CRM / writer</strong></td>
                   <td>
-                    <span class="cta-evidence-local">scripts/validate_static_deck.mjs</span>
-                    ·
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/validate_static_deck.mjs"
-                      target="_blank"
-                      rel="noreferrer"
-                      title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/validate_static_deck.mjs"
-                      >scripts/validate_static_deck.mjs on GitHub</a
-                    >
+                    <p>Archap owns HubSpot-shaped markdown: companies, people, deals, sources, activities, provenance, Bases, and append-only timelines.</p>
+                    <span class="cta-evidence-links">
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/productivity/archap-librarian/SKILL.md"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/productivity/archap-librarian/SKILL.md"
+                        >archap-librarian</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/productivity/obsidian-crm-data-contract/SKILL.md"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/productivity/obsidian-crm-data-contract/SKILL.md"
+                        >crm-data-contract</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/public/assets/obsidian-crm-layer-graph.png"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/public/assets/obsidian-crm-layer-graph.png"
+                        >Obsidian proof PNG</a
+                      >
+                    </span>
                   </td>
                 </tr>
                 <tr>
-                  <td>Specter lookup tooling</td>
+                  <td><strong>Imported Obsidian skills</strong></td>
                   <td>
-                    <span class="cta-evidence-local">scripts/specter_lookup.py</span>
-                    ·
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/specter_lookup.py"
-                      target="_blank"
-                      rel="noreferrer"
-                      title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/specter_lookup.py"
-                      >scripts/specter_lookup.py on GitHub</a
-                    >
+                    <p>Repo-local skill pack adds Obsidian CLI, Bases, and markdown/property semantics; lockfile records the imported sources.</p>
+                    <span class="cta-evidence-links">
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/.agents/skills/obsidian-cli"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/.agents/skills/obsidian-cli"
+                        >obsidian-cli</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/.agents/skills/obsidian-bases"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/.agents/skills/obsidian-bases"
+                        >obsidian-bases</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/skills-lock.json"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/skills-lock.json"
+                        >skills-lock.json</a
+                      >
+                    </span>
                   </td>
                 </tr>
                 <tr>
-                  <td>Deck screenshots (Obsidian CRM, Hermes)</td>
+                  <td><strong>Hermes Luma pipeline</strong></td>
                   <td>
-                    <span class="cta-evidence-local">public/assets/</span>
-                    ·
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/public/assets"
-                      target="_blank"
-                      rel="noreferrer"
-                      title="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/public/assets"
-                      >public/assets/ on GitHub</a
-                    >
+                    <p>Weekly public-event harvest, hydration, topic scoring, Browser Use guest-list layer, and HubSpot-ready lead JSONL layout.</p>
+                    <span class="cta-evidence-links">
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/research/luma-gtm-harvest/SKILL.md"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/research/luma-gtm-harvest/SKILL.md"
+                        >luma-gtm-harvest</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/research/luma-guestlist-browseruse/SKILL.md"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/research/luma-guestlist-browseruse/SKILL.md"
+                        >guestlist-browseruse</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/luma_weekly.sh"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/luma_weekly.sh"
+                        >luma_weekly.sh</a
+                      >
+                    </span>
                     <br />
-                    <span class="cta-evidence-note">Local smoke output: <span class="cta-evidence-local">.gstack/luma/</span></span>
+                    <span class="cta-evidence-note">Local run outputs stay private under <span class="cta-evidence-local">.gstack/luma/</span>.</span>
                   </td>
                 </tr>
                 <tr>
-                  <td>Hermes Docker browser agent</td>
+                  <td><strong>Cala + Specter graph</strong></td>
                   <td>
-                    <span class="cta-evidence-local">hermes/docker/browser-agent.Dockerfile</span>
-                    ·
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/docker/browser-agent.Dockerfile"
-                      target="_blank"
-                      rel="noreferrer"
-                      title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/docker/browser-agent.Dockerfile"
-                      >hermes/docker/browser-agent.Dockerfile on GitHub</a
-                    >
+                    <p>Unified enrichment computes honest verdicts across Cala entity graph and Specter private-market signals before any CRM mutation.</p>
+                    <span class="cta-evidence-links">
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/research/luma-graph-enrich/SKILL.md"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/skills/research/luma-graph-enrich/SKILL.md"
+                        >luma-graph-enrich</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/specter_lookup.py"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/specter_lookup.py"
+                        >specter_lookup.py</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/cala/AGENTS.md"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/cala/AGENTS.md"
+                        >Cala operator manual</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/cala/fixtures/graph_expansion_chain.json"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/cala/fixtures/graph_expansion_chain.json"
+                        >graph fixtures</a
+                      >
+                    </span>
                   </td>
                 </tr>
                 <tr>
-                  <td>Cala adapter usage (Hermes)</td>
+                  <td><strong>Runtime + artifacts</strong></td>
                   <td>
-                    <span class="cta-evidence-local">cala/AGENTS.md</span>
-                    ·
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/cala/AGENTS.md"
-                      target="_blank"
-                      rel="noreferrer"
-                      title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/cala/AGENTS.md"
-                      >cala/AGENTS.md on GitHub</a
-                    >
+                    <p>Docker-local Hermes browser agents, Telegram command surfaces, Playwright/Browser Use verification, and checked-in proof screenshots.</p>
+                    <span class="cta-evidence-links">
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/DOCKER_BROWSER_AGENTS.md"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/DOCKER_BROWSER_AGENTS.md"
+                        >Docker browser agents</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/docker/browser-agent.Dockerfile"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/docker/browser-agent.Dockerfile"
+                        >browser-agent.Dockerfile</a
+                      >
+                      <a
+                        class="cta-evidence-chip"
+                        href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/public/assets"
+                        target="_blank"
+                        rel="noreferrer"
+                        title="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/public/assets"
+                        >proof assets</a
+                      >
+                    </span>
                   </td>
                 </tr>
               </tbody>
