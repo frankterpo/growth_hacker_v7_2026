@@ -9,12 +9,14 @@ hermes profile create jerme --clone      # or --no-skills / --clone-all as you p
 hermes profile create archap --clone
 ```
 
-Put tokens in **each profile’s** `~/.hermes/profiles/<name>/.env` (never commit tokens):
+Hermes expects each profile to expose its active bot as `TELEGRAM_BOT_TOKEN`.
+Because your parent environment stores both tokens together, map them like this
+when generating profile env files:
 
 | Profile   | Bot        | Variable              |
 |-----------|------------|------------------------|
-| `jerme`   | jermeBot   | `TELEGRAM_BOT_TOKEN=…` |
-| `archap`  | ArchapBot  | `TELEGRAM_BOT_TOKEN=…` (when you have it) |
+| `jerme`   | jermeBot   | parent `TELEGRAM_BOT_TOKEN` → profile `TELEGRAM_BOT_TOKEN` |
+| `archap`  | ArchapBot / archopBot | parent `TELEGRAM_BOT_TOKEN1` → profile `TELEGRAM_BOT_TOKEN` |
 
 Also set `TELEGRAM_ALLOWED_USERS` (and optionally `TELEGRAM_HOME_CHANNEL`) per profile — same pattern as `hermes gateway setup`.
 
@@ -23,10 +25,14 @@ Also set `TELEGRAM_ALLOWED_USERS` (and optionally `TELEGRAM_HOME_CHANNEL`) per p
 **One command from this repo** (tokens only in the shell, never in git):
 
 ```bash
-export JERME_TELEGRAM_BOT_TOKEN='…' ARCHAP_TELEGRAM_BOT_TOKEN='…'
+export TELEGRAM_BOT_TOKEN='…'   # jermeBot
+export TELEGRAM_BOT_TOKEN1='…'  # archap/archopBot
 export START_GATEWAYS=1   # optional: also start both gateways
 bash /Users/pablote/Projects/growth_hacker_v7_2026/scripts/hermes_bootstrap_dual_telegram.sh
 ```
+
+Back-compat aliases are also accepted by the script:
+`JERME_TELEGRAM_BOT_TOKEN` and `ARCHAP_TELEGRAM_BOT_TOKEN`.
 
 ## 2. Personas (skills in this repo)
 

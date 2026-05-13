@@ -4,6 +4,10 @@
 # Prereq: revoke any bot token ever pasted in chat; create fresh tokens in @BotFather.
 #
 # Usage (tokens only in your shell, never committed):
+#   export TELEGRAM_BOT_TOKEN='...'   # jermeBot
+#   export TELEGRAM_BOT_TOKEN1='...'  # archap/archopBot
+#
+# Back-compat aliases also work:
 #   export JERME_TELEGRAM_BOT_TOKEN='...'
 #   export ARCHAP_TELEGRAM_BOT_TOKEN='...'
 #   bash scripts/hermes_bootstrap_dual_telegram.sh
@@ -19,8 +23,12 @@ if ! command -v hermes >/dev/null 2>&1; then
   exit 1
 fi
 
-if [[ -z "${JERME_TELEGRAM_BOT_TOKEN:-}" || -z "${ARCHAP_TELEGRAM_BOT_TOKEN:-}" ]]; then
-  echo "error: set JERME_TELEGRAM_BOT_TOKEN and ARCHAP_TELEGRAM_BOT_TOKEN in the environment" >&2
+JERME_TOKEN="${JERME_TELEGRAM_BOT_TOKEN:-${TELEGRAM_BOT_TOKEN:-}}"
+ARCHAP_TOKEN="${ARCHAP_TELEGRAM_BOT_TOKEN:-${TELEGRAM_BOT_TOKEN1:-}}"
+
+if [[ -z "$JERME_TOKEN" || -z "$ARCHAP_TOKEN" ]]; then
+  echo "error: set TELEGRAM_BOT_TOKEN for jerme and TELEGRAM_BOT_TOKEN1 for archap" >&2
+  echo "       aliases also accepted: JERME_TELEGRAM_BOT_TOKEN and ARCHAP_TELEGRAM_BOT_TOKEN" >&2
   exit 1
 fi
 
@@ -57,8 +65,8 @@ ensure_profile() {
 ensure_profile jerme
 ensure_profile archap
 
-write_telegram_env "$HOME/.hermes/profiles/jerme/.env" "$JERME_TELEGRAM_BOT_TOKEN"
-write_telegram_env "$HOME/.hermes/profiles/archap/.env" "$ARCHAP_TELEGRAM_BOT_TOKEN"
+write_telegram_env "$HOME/.hermes/profiles/jerme/.env" "$JERME_TOKEN"
+write_telegram_env "$HOME/.hermes/profiles/archap/.env" "$ARCHAP_TOKEN"
 
 if [[ "${INSTALL_SKILLS:-1}" == "1" ]]; then
   echo "→ install Hermes skills (productivity)"

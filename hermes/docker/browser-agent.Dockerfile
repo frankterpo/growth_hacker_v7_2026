@@ -27,6 +27,15 @@ RUN apt-get update \
     xvfb \
   && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p --mode=0755 /usr/share/keyrings \
+  && curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg \
+    > /usr/share/keyrings/cloudflare-main.gpg \
+  && echo "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main" \
+    > /etc/apt/sources.list.d/cloudflared.list \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends cloudflared \
+  && rm -rf /var/lib/apt/lists/*
+
 RUN python -m pip install --no-cache-dir --upgrade pip \
   && python -m pip install --no-cache-dir browser-use playwright \
   && python -m pip check

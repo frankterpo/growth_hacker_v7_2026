@@ -9,3 +9,4 @@ export OBSIDIAN_VAULT="${OBSIDIAN_VAULT:-${OBSIDIAN_VAULT_PATH:-/Users/pablote/D
 
 bash "$ROOT/scripts/hermes_browser_agent_image.sh" build
 bash "$ROOT/scripts/hermes_browser_agent_image.sh" verify
+bash "$ROOT/scripts/hermes_browser_agent_image.sh" tunnel-smoke

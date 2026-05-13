@@ -10,6 +10,7 @@ The image installs:
 
 - `browser-use`
 - `profile-use`
+- `cloudflared` for browser-use tunnel mode / Quick Tunnels
 - Playwright Chromium and browser system dependencies
 - Python 3.11 and Node 20 from the existing Hermes base image
 
@@ -52,7 +53,8 @@ The verifier checks:
 
 - the Obsidian vault mount exists in the container at `/vault/obsidian`
 - `browser-use --help` works
-- `browser-use doctor` can run
+- `cloudflared --version` works
+- `browser-use doctor` passes
 - `profile-use --help` works
 - `browser-use` and `playwright` are installed as Python packages
 - Playwright can launch headless Chromium inside Docker
@@ -65,6 +67,15 @@ bash scripts/hermes_browser_agent_image.sh smoke
 ```
 
 This opens `https://example.com` in a container browser session and reads state.
+
+Optional Cloudflare Quick Tunnel smoke test:
+
+```bash
+bash scripts/hermes_browser_agent_image.sh tunnel-smoke
+```
+
+This starts `cloudflared tunnel --url http://127.0.0.1:8765` long enough to
+verify Cloudflare returns a `trycloudflare.com` URL, then tears the process down.
 
 ## Hermes profile config
 
@@ -133,8 +144,10 @@ handoff shape.
   image build failed.
 - Vault not visible in Docker: the profile is missing the vault entry under
   `terminal.docker_volumes`, or `OBSIDIAN_VAULT` is not set to `/vault/obsidian`.
-- `browser-use doctor` reports missing `cloudflared`: only browser-use tunnels
-  need it. Local Chromium use can still work.
+- `browser-use doctor` reports missing `cloudflared`: the image is stale. Rebuild
+  with `bash scripts/hermes_browser_agent_image.sh build`.
+- `tunnel-smoke` cannot publish a `trycloudflare.com` URL: check outbound network
+  access from Docker Desktop and Cloudflare tunnel service availability.
 - Browser launch fails on macOS Docker Desktop: rebuild the image and rerun
   `verify`; Docker Desktop must have enough memory for Chromium.
 - API key missing: do not bake it into the image. Add it to the Hermes profile
