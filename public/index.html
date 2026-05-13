@@ -1870,6 +1870,26 @@
         box-shadow: var(--shadow);
       }
 
+      .cta-box #ask-title {
+        margin-bottom: 0;
+      }
+
+      .cta-subtitle {
+        margin: 0.85rem 0 0;
+        padding-top: 0.85rem;
+        border-top: 1px solid var(--line);
+        max-width: 42rem;
+        margin-inline: auto;
+        font-size: 0.92rem;
+        line-height: 1.58;
+        color: var(--muted);
+      }
+
+      .cta-subtitle strong {
+        color: rgba(244, 244, 241, 0.82);
+        font-weight: 650;
+      }
+
       .cta-actions {
         display: flex;
         flex-wrap: wrap;
@@ -1906,11 +1926,23 @@
       .cta-evidence-table td:first-child {
         color: var(--muted);
         width: 34%;
+        overflow-wrap: anywhere;
       }
 
       .cta-evidence-table a {
         color: var(--gold);
         word-break: break-word;
+      }
+
+      .cta-evidence-local {
+        font-family: var(--mono);
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.93em;
+        white-space: nowrap;
+      }
+
+      .cta-evidence-remote-missing {
+        color: rgba(255, 255, 255, 0.6);
       }
 
       .slide-counter {
@@ -3520,84 +3552,89 @@ primary_contact_id: ""</pre>
         </div>
       </section>
 
-      <section class="slide" data-route="ask" data-title="Thank you" aria-labelledby="ask-title">
+      <section
+        class="slide"
+        data-route="ask"
+        data-title="Thank you"
+        aria-labelledby="ask-title"
+        aria-describedby="ask-subtitle"
+      >
         <div class="frame center">
           <div class="cta-box">
             <p class="eyebrow">10 / Proposal Next Step</p>
-            <h2 id="ask-title">
-              <strong>Thank You. Everything here is powered by running code — Specter, person_db, OpenCode, Cala AI.</strong>
-            </h2>
-            <table class="cta-evidence-table" aria-label="What is live and where it lives in the repo">
+            <h2 id="ask-title">Thank you.</h2>
+            <p id="ask-subtitle" class="cta-subtitle">
+              Hermes agents and Obsidian CRM, wired to Specter, Cala, Browser Use, Luma, LinkedIn Sales Navigator,
+              and Nitter / X.
+              <strong>Runtime:</strong> Docker-local Hermes, Telegram, Ollama, MCP tooling — Oracle Cloud path next.
+            </p>
+            <table class="cta-evidence-table" aria-label="What is live: local paths and matching GitHub locations">
               <thead>
                 <tr>
                   <th scope="col">What's live</th>
-                  <th scope="col">Evidence</th>
+                  <th scope="col">Path / GitHub</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>Static proposal deck</td>
                   <td>
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/public/index.html"
-                      target="_blank"
-                      rel="noreferrer"
-                      >public/index.html</a
-                    >
+                    <span class="cta-evidence-local">public/index.html</span>
+                    ·
+                    <span class="cta-evidence-remote-missing">(<a href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main" target="_blank" rel="noreferrer" title="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main">frankterpo/growth_hacker_v7_2026</a> <code>main</code> lacks this path; publish/sync)</span>
                   </td>
                 </tr>
                 <tr>
                   <td>Deck validation script</td>
                   <td>
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/validate_static_deck.mjs"
-                      target="_blank"
-                      rel="noreferrer"
-                      >scripts/validate_static_deck.mjs</a
-                    >
+                    <span class="cta-evidence-local">scripts/validate_static_deck.mjs</span>
+                    ·
+                    <span class="cta-evidence-remote-missing">(<a href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main" target="_blank" rel="noreferrer" title="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main">frankterpo/growth_hacker_v7_2026</a> <code>main</code> lacks this path; publish/sync)</span>
                   </td>
                 </tr>
                 <tr>
                   <td>Specter lookup tooling</td>
                   <td>
+                    <span class="cta-evidence-local">scripts/specter_lookup.py</span>
+                    ·
                     <a
                       href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/specter_lookup.py"
                       target="_blank"
                       rel="noreferrer"
-                      >scripts/specter_lookup.py</a
+                      title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/specter_lookup.py"
+                      >scripts/specter_lookup.py on GitHub</a
                     >
                   </td>
                 </tr>
                 <tr>
                   <td>Deck screenshots (Obsidian CRM, Hermes)</td>
                   <td>
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/public/assets"
-                      target="_blank"
-                      rel="noreferrer"
-                      >public/assets/</a
-                    >
+                    <span class="cta-evidence-local">public/assets/</span>
+                    ·
+                    <span class="cta-evidence-remote-missing">(<a href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main" target="_blank" rel="noreferrer" title="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main">frankterpo/growth_hacker_v7_2026</a> <code>main</code> lacks this path; publish/sync)</span>
+                    <br />
+                    <span class="cta-evidence-local">.gstack/luma/</span> (local — not in repo; Luma harvest / smoke output)
                   </td>
                 </tr>
                 <tr>
                   <td>Hermes Docker browser agent</td>
                   <td>
-                    <a
-                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/docker/browser-agent.Dockerfile"
-                      target="_blank"
-                      rel="noreferrer"
-                      >hermes/docker/browser-agent.Dockerfile</a
-                    >
+                    <span class="cta-evidence-local">hermes/docker/browser-agent.Dockerfile</span>
+                    ·
+                    <span class="cta-evidence-remote-missing">(<a href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main" target="_blank" rel="noreferrer" title="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main">frankterpo/growth_hacker_v7_2026</a> <code>main</code> lacks this path; publish/sync)</span>
                   </td>
                 </tr>
                 <tr>
                   <td>Cala adapter usage (Hermes)</td>
                   <td>
+                    <span class="cta-evidence-local">cala/AGENTS.md</span>
+                    ·
                     <a
                       href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/cala/AGENTS.md"
                       target="_blank"
                       rel="noreferrer"
-                      >cala/AGENTS.md</a
+                      title="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/cala/AGENTS.md"
+                      >cala/AGENTS.md on GitHub</a
                     >
                   </td>
                 </tr>
@@ -3799,8 +3836,8 @@ primary_contact_id: ""</pre>
           route: "ask",
           coordinate: "10",
           parent: null,
-          agenda: "Thank you · repo evidence",
-          title: "Thank you — Specter, Cala, Hermes, deck sources"
+          agenda: "Thank you · next step",
+          title: "Thank you"
         }
       ];
 
@@ -4229,12 +4266,12 @@ primary_contact_id: ""</pre>
         }
 
         const nextHash = `#/${routes[currentIndex]}`;
+        // Programmatic slide changes must not call `location.hash = …`; each assignment
+        // adds a browser history entry. ArrowLeft uses in-memory `routeHistory`, so a
+        // second "back" (browser Back / swipe) would pop to the prior hash and fight
+        // deck navigation (e.g. ask ↔ demo). replaceState updates the URL without stacking.
         if (window.location.hash !== nextHash) {
-          if (replace) {
-            history.replaceState(null, "", nextHash);
-          } else {
-            window.location.hash = nextHash;
-          }
+          history.replaceState(null, "", nextHash);
         }
 
         updateQuestMapSeenUi();
