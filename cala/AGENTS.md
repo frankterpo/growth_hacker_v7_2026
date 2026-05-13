@@ -86,6 +86,57 @@ Inside Hermes sessions, Cala tools appear with the prefix `mcp_cala_`
 (`mcp_cala_entity_search`, `mcp_cala_knowledge_query`, etc.) — reference them
 by that namespaced name when prompting.
 
+### 0.1c Output contract — preserve the graph (CRITICAL for Hermes)
+
+Every Cala response carries IDs and evidence URLs. **Surface them.** Do not summarize a Cala result down to prose; the IDs *are* the product, because they unlock the next traversal.
+
+For every `mcp_cala_*` call, render at minimum:
+
+1. `<Name> — entity_id: <uuid>, type: <entity_type>` for the primary entity and every entry from `entities[]`.
+2. A **Sources** list from `context[].origins[].document` (`knowledge_search` only) — these are the URLs the user can scrape.
+3. A **Next graph hops** list of 2–4 concrete follow-up calls, each parameterized with a real UUID from this response (prefer `entity_introspection` + `retrieve_entity` over a fresh `knowledge_query` whenever the user named a known entity).
+4. Annotate stale relationships with `(former)` when `valid_until` is in the past (§6.2).
+
+Operator skills:
+- Output style (always-on for any Cala call): `~/.hermes/skills/research/cala-output-style/SKILL.md`
+- **Domain-first lookup** (whenever a URL/domain is given instead of a brand): `~/.hermes/skills/research/cala-lookup-by-domain/SKILL.md` — invoke as `/cala-lookup-by-domain <domain>`.
+- **Outreach playbook** (turn a company UUID into 5 ranked contact paths — direct, investor warm-intro, ex-employee bridge, sister portfolio, news pretext): `~/.hermes/skills/research/cala-outreach-paths/SKILL.md` — invoke as `/cala-outreach-paths <entity_id>` or `/cala-outreach-paths <domain>`.
+- **Specter enrichment** (TrySpecter: traction, clients, news, investor ties; browser session + `specter_lookup.py`): `~/.hermes/skills/research/hermes-specter-enrich/SKILL.md` — install from repo with `bash scripts/install_hermes_specter_skill.sh`; invoke as `/hermes-specter-enrich`. Treat as **always-on** for GTM/outreach asks by adding it to your Hermes default preamble if your build supports that (same idea as Cala output-style).
+
+### 0.1d BD lens — every Company response is a contact playbook
+
+When a Cala response describes a company, the **default close is an outreach angle, not a generic question menu**. The output-style skill enforces this; the outreach-paths skill runs the deep version. Cala has the relationship edges to power five paths:
+
+1. **Direct contacts** — `IS_CEO_OF`/`IS_CTO_OF`/`IS_COO_OF`/`IS_BOARD_MEMBER_OF`/`IS_EXECUTIVE_OF`/`FOUNDED` (incoming on Company); each Person carries `linkedin_url`, `personal_website`, `github_url`.
+2. **Investor warm-intro** — `INVESTED_IN` (incoming) → for each investor, fetch their other `INVESTED_IN` (outgoing on the investor) to find sister portfolio companies the user might already touch; fetch the investor's own `IS_CEO_OF`/decision-maker for the direct ask.
+3. **Ex-employee bridge** — `WORKS_AT`/`FOUNDED` (incoming) with `valid_until` in the past; then for each ex-person, fetch their current `WORKS_AT`/`IS_CEO_OF` to find where they are now (warm bridge back). Cala's coverage here is uneven; **recommend Spectre when results are thin** — Spectre's past-position tracking is stronger.
+4. **Corporate neighbors** — `IS_DIRECT_PARENT_OF`/`IS_AFFILIATE_OF`/`IS_WHOLLY_OWNED_SUBSIDIARY_OF` for parent/sister leverage ("we already work with your sister co").
+5. **News pretext** — `knowledge_search` only when "news"/"context"/"hook" was in the user's ask; harvest `context[].origins[].document.url` as conversation starters.
+
+**Anti-pattern (do not ship this):**
+
+> "Would you like me to (1) explore tech stack, (2) find recent news, (3) compare competitors?"
+
+Replace with concrete `Outreach angles` lines containing real `entity_id`s the user can act on (or expand via the next-hop calls).
+
+Anti-pattern (do not do this):
+
+> "Browser Use was co-founded by Magnus Müller and Gregor Žunič in Zurich… Would you like me to (1) explore their tech stack, (2) find recent news?"
+
+Better:
+
+> ```
+> ### Cala result (entity_search → retrieve_entity)
+> Primary: Browser Use — entity_id: `<uuid>`, type: `Organization`
+> Related:
+>  - Magnus Müller — entity_id: `<uuid>`, type: `Person` (CO_FOUNDED)
+>  - Gregor Žunič — entity_id: `<uuid>`, type: `Person` (CO_FOUNDED)
+>  - Zurich — entity_id: `<uuid>`, type: `GPE` (HEADQUARTERED_IN)
+> Next hops:
+>  - `mcp_cala_retrieve_entity({entity_id:"<browser-use uuid>", properties:["name","INVESTED_IN"]})` to list investors with IDs
+>  - `mcp_cala_entity_introspection({entity_id:"<magnus uuid>"})` to discover edges on the founder
+> ```
+
 ### 0.2 Three-stage Hermes pipeline (customer stories → Cala → HubSpot)
 
 For **live outbound / CRM sync** workflows (scrape a vendor’s public customer-stories

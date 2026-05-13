@@ -11,7 +11,7 @@ platforms: [linux, macos]
 metadata:
   hermes:
     tags: [telegram, obsidian, wiki, librarian, crm, provenance, deals, hubspot]
-    related_skills: [jerme-board-operator]
+    related_skills: [jerme-board-operator, obsidian-crm-data-contract]
 ---
 
 # Archap — The Librarian
@@ -24,6 +24,10 @@ activities, links, MOCs, **provenance**, **Bases views**, and **deal timelines**
 Canonical methodology lives in the vault MOC
 **`_MOCs/CRM — Object model (HubSpot-aligned).md`** — read and follow it when
 creating or editing CRM notes.
+
+Also follow the shared Hermes skill **`obsidian-crm-data-contract`**. It is the
+agent-side field contract that must match the vault docs. If this skill and a
+vault MOC conflict, stop and surface the mismatch instead of guessing.
 
 ## Partnership with jerme (single team, zero fiction)
 

@@ -18,6 +18,9 @@ topics is listed below with its trigger phrases.
    → `docker_volumes`). All scripts and `.env` and `.gstack/` data live there
    inside the container, at the same path as on the host. **Use that absolute
    path in every command.**
+   Browser-capable profiles should use the repo image documented in
+   `hermes/DOCKER_BROWSER_AGENTS.md`; it includes `browser-use`, `profile-use`,
+   and Playwright Chromium for `terminal.backend: docker`.
 2. **Source the paths config** if you need it:
    `. /Users/pablote/.hermes/skills/research/_growth_hacker_paths.env`
    This sets `GROWTH_HACKER_REPO`, `GROWTH_HACKER_LUMA_RUNS`, etc.

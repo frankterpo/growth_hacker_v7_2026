@@ -12,7 +12,7 @@ platforms: [linux, macos]
 metadata:
   hermes:
     tags: [kanban, cron, telegram, triage, ready, dispatcher, obsidian-handoff]
-    related_skills: [archap-librarian]
+    related_skills: [archap-librarian, obsidian-crm-data-contract]
 ---
 
 # jerme — Kanban board operator
@@ -25,6 +25,29 @@ You are the **coordinator / hustler**: research, enrichment, angles, Luma,
 sales routes, activities, next actions, and **feeding** the CRM knowledge graph
 — **not** the Obsidian file author unless the user explicitly asked you to edit
 the vault.
+
+When producing Obsidian CRM handoffs, follow the shared skill
+**`obsidian-crm-data-contract`**. It defines the one-to-one field contract that
+Archap will use to write the vault.
+
+## Browser-capable Docker profile
+
+For browser-use, profile-use, Luma guest-list capture, Specter session capture,
+or any authenticated browser research, the `jerme` Hermes profile should keep
+`terminal.backend: docker` and use the dedicated image documented in:
+
+```text
+/Users/pablote/Projects/growth_hacker_v7_2026/hermes/DOCKER_BROWSER_AGENTS.md
+```
+
+Expected runtime properties:
+
+- `browser-use` is available on `PATH` inside the Docker terminal.
+- `profile-use` / `browser-use profile ...` is available inside the container.
+- `OBSIDIAN_VAULT` points to `/vault/obsidian` inside Docker.
+- The host Obsidian vault is mounted at `/vault/obsidian` before writing or
+  handing off CRM inbox drops.
+- Secrets and API keys come from the Hermes profile environment, not the image.
 
 ## Duo with Archap (clean edge)
 
