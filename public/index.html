@@ -3,23 +3,4554 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>growth_hacker_v7_2026</title>
+    <meta
+      name="description"
+      content="V7 GTM Engine: a live go-to-market presentation for v7labs.com."
+    />
+    <title>V7 GTM Engine</title>
     <style>
+      :root {
+        --bg: #050506;
+        --panel: rgba(16, 17, 20, 0.82);
+        --panel-strong: rgba(25, 27, 33, 0.94);
+        --line: rgba(255, 255, 255, 0.16);
+        --line-strong: rgba(255, 255, 255, 0.34);
+        --text: #f3f3f0;
+        --muted: #9b9a96;
+        --dim: #66645f;
+        --gold: #37c6d0;
+        --gold-2: #036c70;
+        --violet: #9af6ff;
+        --v7-cyan: #37c6d0;
+        --v7-teal: #1a9ba1;
+        --v7-deep: #036c70;
+        --green: #7dffb4;
+        --blue: #7dc7ff;
+        --red: #ff7777;
+        --shadow: 0 32px 80px rgba(0, 0, 0, 0.52);
+        --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
       body {
-        font-family: system-ui, sans-serif;
-        max-width: 42rem;
-        margin: 3rem auto;
-        padding: 0 1.25rem;
-        line-height: 1.5;
+        height: 100%;
+        overflow: hidden;
+        color-scheme: dark;
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.1), transparent 22rem),
+          radial-gradient(circle at 20% 80%, rgba(55, 198, 208, 0.13), transparent 26rem),
+          radial-gradient(circle at 84% 18%, rgba(3, 108, 112, 0.22), transparent 22rem),
+          linear-gradient(180deg, #080809 0%, var(--bg) 58%, #020203 100%);
+        color: var(--text);
+        font-family: var(--sans);
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        content: "";
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 22px 22px;
+        mask-image: radial-gradient(circle at 50% 42%, black 0%, transparent 72%);
+      }
+
+      body::after {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        content: "";
+        background:
+          repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.025) 0,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px,
+            transparent 4px
+          );
+        mix-blend-mode: screen;
+        opacity: 0.32;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .deck {
+        position: relative;
+        z-index: 1;
+        height: 100dvh;
+        overflow: hidden;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        height: 100dvh;
+        padding: clamp(1rem, 2.4vw, 2.4rem) clamp(2.6rem, 5vw, 4.25rem);
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(24px) scale(0.985);
+        transition:
+          opacity 260ms ease,
+          transform 260ms ease,
+          visibility 260ms ease;
+      }
+
+      .slide.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0) scale(1);
+      }
+
+      .slide.back {
+        transform: translateX(-24px) scale(0.985);
+      }
+
+      .frame {
+        width: min(1120px, calc(100vw - clamp(5rem, 8vw, 7rem)));
+        max-height: calc(100dvh - clamp(3rem, 7vh, 5rem));
+        min-height: auto;
+        display: grid;
+        gap: clamp(0.65rem, 1.5vw, 1.05rem);
+        align-content: center;
+      }
+
+      .center {
+        text-align: center;
+        justify-items: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 0.9rem;
+        color: var(--gold);
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        max-width: 920px;
+        color: #f7f7f5;
+        font-size: clamp(3.2rem, 9vw, 7.4rem);
+        line-height: 0.9;
+        letter-spacing: -0.065em;
+        text-shadow: 0 0 36px rgba(255, 255, 255, 0.14);
+        text-wrap: balance;
+      }
+
+      h2 {
+        max-width: 940px;
+        font-size: clamp(2.1rem, 4.8vw, 4.8rem);
+        line-height: 0.96;
+        letter-spacing: -0.065em;
+        text-wrap: balance;
+      }
+
+      h3 {
+        font-size: clamp(1.15rem, 2.2vw, 1.7rem);
+        letter-spacing: -0.035em;
+      }
+
+      .lead {
+        max-width: 770px;
+        color: #deddd8;
+        font-size: clamp(1rem, 1.9vw, 1.45rem);
+        line-height: 1.28;
+        letter-spacing: -0.026em;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .dim {
+        color: var(--dim);
+      }
+
+      .brand-mark {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: clamp(6.8rem, 12vw, 9.2rem);
+        height: clamp(4.4rem, 8vw, 6rem);
+        margin: 0 auto 2.2rem;
+        border: 1px solid rgba(55, 198, 208, 0.44);
+        border-radius: 18px;
+        color: #fff;
+        background:
+          radial-gradient(circle at 35% 24%, rgba(255, 255, 255, 0.16), transparent 28%),
+          linear-gradient(135deg, rgba(55, 198, 208, 0.18), rgba(3, 108, 112, 0.1) 54%, rgba(255, 255, 255, 0.045));
+        box-shadow:
+          0 0 0 10px rgba(55, 198, 208, 0.035),
+          0 0 36px rgba(55, 198, 208, 0.32),
+          0 0 92px rgba(3, 108, 112, 0.24);
+      }
+
+      .brand-mark::after {
+        position: absolute;
+        inset: 0.38rem;
+        content: "";
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 8px 8px;
+        mask-image: radial-gradient(circle at 50% 50%, black, transparent 74%);
+      }
+
+      .brand-mark img {
+        position: relative;
+        z-index: 1;
+        width: 76%;
+        height: auto;
+        filter: drop-shadow(0 0 18px rgba(55, 198, 208, 0.5));
+      }
+
+      .byline {
+        display: grid;
+        gap: 0.85rem;
+        margin-top: 2.6rem;
+        color: var(--muted);
+        font-size: clamp(1rem, 2vw, 1.35rem);
+        font-weight: 700;
+      }
+
+      .nav-hint {
+        position: fixed;
+        left: 50%;
+        bottom: 1.45rem;
+        z-index: 12;
+        color: rgba(255, 255, 255, 0.36);
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        transform: translateX(-50%);
+        white-space: nowrap;
+      }
+
+      .nav-arrow {
+        position: fixed;
+        top: 50%;
+        z-index: 14;
+        display: grid;
+        place-items: center;
+        width: 3rem;
+        height: 5.4rem;
+        border: 0;
+        color: rgba(255, 255, 255, 0.72);
+        background: transparent;
+        cursor: pointer;
+        transform: translateY(-50%);
+        transition: color 160ms ease, transform 160ms ease;
+      }
+
+      .nav-arrow:hover {
+        color: #fff;
+        transform: translateY(-50%) scale(1.08);
+      }
+
+      .nav-arrow.prev {
+        left: 0.5rem;
+      }
+
+      .nav-arrow.next {
+        right: 0.5rem;
+      }
+
+      .nav-arrow::before {
+        width: 1.55rem;
+        height: 1.55rem;
+        content: "";
+        border-top: 4px solid currentColor;
+        border-right: 4px solid currentColor;
+      }
+
+      .nav-arrow.prev::before {
+        transform: rotate(-135deg);
+      }
+
+      .nav-arrow.next::before {
+        transform: rotate(45deg);
+      }
+
+      .quest-map {
+        position: fixed;
+        top: 0.62rem;
+        right: 0.62rem;
+        z-index: 16;
+        width: min(188px, 24vw);
+        min-height: 0;
+        padding: 0.42rem 0.46rem 0.44rem;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: rgba(9, 10, 12, 0.72);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+      }
+
+      .quest-map-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.35rem;
+        margin-bottom: 0.06rem;
+      }
+
+      .quest-map-top-main {
+        display: flex;
+        align-items: baseline;
+        flex: 1;
+        min-width: 0;
+        gap: 0.35rem;
+      }
+
+      .quest-map-top-main .quest-map-progress {
+        margin-left: auto;
+      }
+
+      .quest-map-compact-label {
+        display: none;
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        color: rgba(230, 254, 255, 0.92);
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+      }
+
+      .quest-map-collapsed .quest-map-compact-label {
+        display: block;
+      }
+
+      .quest-map-collapsed .quest-title,
+      .quest-map-collapsed .quest-map-progress {
+        display: none;
+      }
+
+      .quest-map-toggle {
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        width: 1.35rem;
+        height: 1.35rem;
+        margin: 0;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(230, 254, 255, 0.82);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 800;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .quest-map-toggle:hover,
+      .quest-map-toggle:focus-visible {
+        border-color: rgba(55, 198, 208, 0.55);
+        color: var(--gold);
+      }
+
+      .quest-map-toggle:focus-visible {
+        outline: 1px solid var(--gold);
+        outline-offset: 2px;
+      }
+
+      .quest-map-panel {
+        display: grid;
+        gap: 0;
+        max-height: min(560px, 78vh);
+        opacity: 1;
+        overflow: hidden;
+        transition:
+          max-height 0.22s ease,
+          opacity 0.18s ease;
+      }
+
+      .quest-map-collapsed .quest-map-top {
+        cursor: pointer;
+      }
+
+      .quest-map-collapsed .quest-map-toggle {
+        cursor: pointer;
+      }
+
+      .quest-map-collapsed .quest-map-panel {
+        max-height: 0;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .quest-map-collapsed {
+        width: auto;
+        min-width: 0;
+        max-width: min(160px, 42vw);
+      }
+
+      .quest-title {
+        margin: 0;
+        flex: 0 0 auto;
+        font-family: var(--mono);
+        font-size: 0.64rem;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: 0.1em;
+      }
+
+      .quest-map-progress {
+        flex: 0 0 auto;
+        color: var(--gold);
+        font-family: var(--mono);
+        font-size: 0.55rem;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .quest-subtitle-line {
+        margin: 0 0 0.2rem;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 0.45rem;
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .quest-subtitle-line #quest-mode {
+        display: inline;
+      }
+
+      .quest-breadcrumb {
+        margin: 0 0 0.28rem;
+        color: rgba(230, 254, 255, 0.88);
+        font-family: var(--mono);
+        font-size: 0.52rem;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: left;
+        word-break: break-word;
+      }
+
+      .quest-legend {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.35rem;
+        margin-top: 0.34rem;
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 0.44rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* Numbered columns: top-level slides run left to right, detail slides stack down. */
+      .map-grid-scroll {
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        margin-inline: -0.08rem;
+        padding-inline: 0.08rem;
+        padding-bottom: 0.12rem;
+        scroll-snap-type: x proximity;
+        scrollbar-width: thin;
+      }
+
+      .map-grid-scroll::-webkit-scrollbar {
+        height: 3px;
+      }
+
+      .map-grid-scroll::-webkit-scrollbar-thumb {
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.18);
+      }
+
+      .map-grid {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: var(--map-column-size, 25px);
+        width: max-content;
+        gap: 4px;
+        align-items: start;
+      }
+
+      .map-column {
+        display: grid;
+        gap: 3px;
+        align-content: start;
+      }
+
+      .map-cell {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 100%;
+        min-width: var(--map-cell-size, 25px);
+        min-height: var(--map-cell-size, 20px);
+        aspect-ratio: 1;
+        padding: 0;
+        scroll-snap-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        appearance: none;
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(230, 254, 255, 0.78);
+        font-family: var(--mono);
+        font-size: 0.48rem;
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.04em;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .map-cell.route {
+        border-color: rgba(55, 198, 208, 0.2);
+        background: rgba(55, 198, 208, 0.08);
+        cursor: pointer;
+      }
+
+      .map-cell.route:hover,
+      .map-cell.route:focus-visible {
+        border-color: rgba(55, 198, 208, 0.65);
+        background: rgba(55, 198, 208, 0.16);
+      }
+
+      .map-cell.route:focus-visible {
+        outline: 1px solid var(--gold);
+        outline-offset: 2px;
+      }
+
+      .map-cell.detail {
+        border-color: rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.075);
+      }
+
+      .map-cell.ancestor {
+        border-color: rgba(55, 198, 208, 0.52);
+        background: rgba(55, 198, 208, 0.14);
+      }
+
+      .map-cell.descendant:not(.active) {
+        border-color: rgba(55, 198, 208, 0.4);
+      }
+
+      .map-cell.route.visited:not(.active) {
+        border-color: rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.11);
+        color: rgba(230, 254, 255, 0.64);
+      }
+
+      .map-cell.active {
+        border-color: rgba(255, 255, 255, 0.85);
+        background: linear-gradient(135deg, #fff, var(--v7-cyan));
+        color: #061012;
+        box-shadow:
+          0 0 0 1px rgba(55, 198, 208, 0.45),
+          0 0 14px rgba(55, 198, 208, 0.85),
+          0 0 28px rgba(55, 198, 208, 0.35);
+        transform: scale(1.08);
+        z-index: 1;
+      }
+
+      .pixel-title {
+        position: relative;
+        display: inline-block;
+        padding: 0.05em 0.05em 0.12em;
+        color: #ffd924;
+        font-family: var(--mono);
+        font-size: clamp(2.4rem, 9vw, 7.2rem);
+        font-weight: 950;
+        line-height: 0.83;
+        letter-spacing: -0.14em;
+        text-transform: uppercase;
+        text-shadow:
+          0 4px 0 #9e4500,
+          0 8px 0 #191004,
+          0 0 36px rgba(255, 190, 34, 0.24);
+      }
+
+      .pixel-title::after {
+        position: absolute;
+        inset: auto 0 0.02em;
+        height: 0.12em;
+        content: "";
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34), transparent);
+        opacity: 0.62;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: clamp(1rem, 2.6vw, 2rem);
+        align-items: stretch;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+      }
+
+      .panel,
+      .card,
+      .terminal,
+      .graph-panel {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+      }
+
+      .panel {
+        padding: clamp(1.1rem, 2.2vw, 1.6rem);
+      }
+
+      .card {
+        min-height: 170px;
+        padding: 1.15rem;
+        transition:
+          border-color 160ms ease,
+          transform 160ms ease,
+          background 160ms ease;
+      }
+
+      .card:hover,
+      .card:focus-within {
+        border-color: rgba(55, 198, 208, 0.54);
+        background: rgba(13, 34, 36, 0.88);
+        transform: translateY(-3px);
+      }
+
+      .card p,
+      .panel p {
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.38rem;
+        width: fit-content;
+        margin-bottom: 0.72rem;
+        padding: 0.28rem 0.48rem;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 999px;
+        color: var(--gold);
+        background: rgba(55, 198, 208, 0.08);
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .stack-list {
+        display: grid;
+        gap: 0.62rem;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .stack-list li {
+        display: flex;
+        gap: 0.7rem;
+        align-items: flex-start;
+        color: #d9d8d2;
+        line-height: 1.35;
+      }
+
+      .stack-list li::before {
+        flex: 0 0 auto;
+        width: 0.54rem;
+        height: 0.54rem;
+        margin-top: 0.42rem;
+        content: "";
+        background: var(--gold);
+        box-shadow: 0 0 14px rgba(55, 198, 208, 0.56);
+      }
+
+      .terminal {
+        overflow: hidden;
+        color: #dfded8;
+        font-family: var(--mono);
+      }
+
+      .terminal-bar {
+        display: flex;
+        gap: 0.38rem;
+        align-items: center;
+        padding: 0.72rem 0.9rem;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .dot {
+        width: 0.66rem;
+        height: 0.66rem;
+        border-radius: 50%;
+        background: var(--red);
+      }
+
+      .dot:nth-child(2) {
+        background: var(--gold);
+      }
+
+      .dot:nth-child(3) {
+        background: var(--green);
+      }
+
+      .terminal-body {
+        padding: 1rem;
+        font-size: clamp(0.74rem, 1.45vw, 0.91rem);
+        line-height: 1.45;
+      }
+
+      .terminal-body strong {
+        color: #fff;
+      }
+
+      .terminal-body .accent {
+        color: var(--gold);
+      }
+
+      .terminal-body .ok {
+        color: var(--green);
+      }
+
+      .tool-map {
+        position: relative;
+        min-height: 450px;
+        padding: 1rem;
+      }
+
+      .memory-panel {
+        display: grid;
+        gap: 0.85rem;
+        overflow: hidden;
+        padding: 1rem;
+      }
+
+      .obsidian-proof-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        align-items: center;
+      }
+
+      .obsidian-mark {
+        display: block;
+        flex: 0 0 auto;
+        width: 2.1rem;
+        height: 2.1rem;
+        object-fit: contain;
+      }
+
+      .obsidian-proof-header strong {
+        display: block;
+        color: #fff;
+        line-height: 1.05;
+      }
+
+      .obsidian-proof-header span {
+        display: block;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+      }
+
+      .obsidian-proof-hero,
+      .shot-frame {
+        position: relative;
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid rgba(185, 167, 255, 0.28);
+        border-radius: 12px;
+        background: #121116;
+      }
+
+      .obsidian-proof-hero img,
+      .shot-frame img {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+        cursor: zoom-in;
+      }
+
+      .obsidian-proof-hero img {
+        aspect-ratio: 16 / 7.4;
+        object-position: center;
+      }
+
+      .obsidian-lightbox {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: inherit;
+        overflow: hidden;
+      }
+
+      .obsidian-lightbox::backdrop {
+        background: rgba(5, 5, 6, 0.92);
+        backdrop-filter: blur(5px);
+      }
+
+      .obsidian-lightbox-scrim {
+        position: absolute;
+        inset: 0;
+        cursor: zoom-out;
+      }
+
+      .obsidian-lightbox-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        padding: clamp(1rem, 4vw, 2.5rem);
+        pointer-events: none;
+      }
+
+      .obsidian-lightbox-inner img {
+        max-width: min(96vw, 1280px);
+        max-height: 92vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        cursor: zoom-out;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        pointer-events: auto;
+      }
+
+      body.modal-open .deck,
+      body.modal-open button.nav-arrow,
+      body.modal-open .slide-counter,
+      body.modal-open .nav-hint {
+        pointer-events: none;
+      }
+
+      .obsidian-proof-hero figcaption,
+      .shot-frame figcaption {
+        position: absolute;
+        left: 0.65rem;
+        bottom: 0.55rem;
+        max-width: calc(100% - 1.3rem);
+        padding: 0.25rem 0.42rem;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 999px;
+        color: #f4f1ff;
+        background: rgba(8, 8, 10, 0.74);
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        font-weight: 800;
+        backdrop-filter: blur(8px);
+      }
+
+      .memory-tool-map {
+        min-height: 260px;
+        border: 1px solid rgba(185, 167, 255, 0.18);
+        border-radius: 12px;
+        background:
+          radial-gradient(circle at 50% 45%, rgba(185, 167, 255, 0.15), transparent 34%),
+          rgba(255, 255, 255, 0.035);
+      }
+
+      .memory-tool-map .tool-node {
+        width: 104px;
+        min-height: 58px;
+        padding: 0.55rem;
+      }
+
+      .memory-tool-map .tool-node strong {
+        font-size: 0.78rem;
+      }
+
+      .memory-tool-map .tool-node span {
+        font-size: 0.58rem;
+      }
+
+      .memory-tool-map .node-obsidian {
+        top: 32%;
+        left: 38%;
+        width: 152px;
+        min-height: 86px;
+        border-color: rgba(185, 167, 255, 0.86);
+        background:
+          radial-gradient(circle at 34% 18%, rgba(255, 255, 255, 0.18), transparent 30%),
+          linear-gradient(135deg, rgba(101, 79, 202, 0.95), rgba(28, 24, 44, 0.96));
+        box-shadow:
+          0 0 0 1px rgba(185, 167, 255, 0.24),
+          0 0 38px rgba(185, 167, 255, 0.28);
+      }
+
+      .memory-tool-map .node-specter {
+        top: 5%;
+        left: 5%;
+      }
+
+      .memory-tool-map .node-cala {
+        top: 6%;
+        right: 6%;
+      }
+
+      .memory-tool-map .node-luma {
+        top: 41%;
+        left: 2%;
+      }
+
+      .memory-tool-map .node-social {
+        right: 2%;
+        bottom: 30%;
+      }
+
+      .memory-tool-map .node-hermes-a {
+        left: 22%;
+        bottom: 5%;
+      }
+
+      .memory-tool-map .node-hermes-b {
+        right: 20%;
+        bottom: 5%;
+      }
+
+      .memory-tool-map + .tooltip {
+        min-height: 3rem;
+        margin-top: 0;
+        font-size: 0.86rem;
+      }
+
+      .tool-node {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        width: 118px;
+        min-height: 74px;
+        padding: 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        text-align: center;
+        background: var(--panel-strong);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.32);
+        cursor: pointer;
+      }
+
+      .tool-node.active {
+        border-color: rgba(125, 255, 180, 0.72);
+        box-shadow:
+          0 0 0 1px rgba(125, 255, 180, 0.28),
+          0 0 34px rgba(125, 255, 180, 0.18);
+      }
+
+      .tool-node span {
+        display: block;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.65rem;
+      }
+
+      .tool-node strong {
+        display: block;
+        font-size: 0.9rem;
+      }
+
+      .node-obsidian {
+        top: 39%;
+        left: 42%;
+        width: 150px;
+        min-height: 94px;
+        border-color: rgba(185, 167, 255, 0.55);
+      }
+
+      .node-specter {
+        top: 7%;
+        left: 7%;
+      }
+
+      .node-cala {
+        top: 10%;
+        right: 9%;
+      }
+
+      .node-luma {
+        top: 43%;
+        left: 4%;
+      }
+
+      .node-social {
+        right: 5%;
+        bottom: 30%;
+      }
+
+      .node-hermes-a {
+        left: 26%;
+        bottom: 8%;
+      }
+
+      .node-hermes-b {
+        right: 24%;
+        bottom: 8%;
+      }
+
+      .map-line {
+        position: absolute;
+        height: 1px;
+        transform-origin: left center;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.38), transparent);
+      }
+
+      .line-1 {
+        top: 30%;
+        left: 19%;
+        width: 35%;
+        transform: rotate(25deg);
+      }
+
+      .line-2 {
+        top: 31%;
+        left: 53%;
+        width: 35%;
+        transform: rotate(-24deg);
+      }
+
+      .line-3 {
+        top: 52%;
+        left: 16%;
+        width: 31%;
+        transform: rotate(-5deg);
+      }
+
+      .line-4 {
+        top: 57%;
+        left: 55%;
+        width: 33%;
+        transform: rotate(2deg);
+      }
+
+      .line-5 {
+        bottom: 25%;
+        left: 34%;
+        width: 18%;
+        transform: rotate(-32deg);
+      }
+
+      .line-6 {
+        bottom: 24%;
+        left: 53%;
+        width: 22%;
+        transform: rotate(31deg);
+      }
+
+      .tooltip {
+        min-height: 4.3rem;
+        margin-top: 0.9rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.42;
+      }
+
+      .route-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+      }
+
+      .route-card {
+        min-height: 145px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 1rem;
+        color: inherit;
+        background: rgba(255, 255, 255, 0.045);
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .route-card.active {
+        border-color: rgba(55, 198, 208, 0.8);
+        background: rgba(55, 198, 208, 0.11);
+      }
+
+      .route-card small {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--gold);
+        font-family: var(--mono);
+        font-weight: 800;
+      }
+
+      .route-card p {
+        color: var(--muted);
+        font-size: 0.93rem;
+      }
+
+      .route-output {
+        display: grid;
+        gap: 0.7rem;
+        align-content: start;
+      }
+
+      .route-output .headline {
+        color: #fff;
+        font-size: clamp(1.35rem, 2.4vw, 1.95rem);
+        font-weight: 850;
+        letter-spacing: -0.04em;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 0.45rem;
+        align-items: stretch;
+      }
+
+      .flow-step {
+        position: relative;
+        min-height: 136px;
+        padding: 0.95rem 0.72rem;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .flow-step::after {
+        position: absolute;
+        top: 50%;
+        right: -0.43rem;
+        width: 0.43rem;
+        height: 1px;
+        content: "";
+        background: var(--line-strong);
+      }
+
+      .flow-step:last-child::after {
+        display: none;
+      }
+
+      .flow-step strong {
+        display: block;
+        margin-bottom: 0.42rem;
+        color: var(--gold);
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        text-transform: uppercase;
+      }
+
+      .flow-step p {
+        color: #d5d4ce;
+        font-size: 0.92rem;
+        line-height: 1.32;
+      }
+
+      .loop-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+        gap: 1rem;
+        align-items: stretch;
+      }
+
+      .loop-card {
+        position: relative;
+        display: grid;
+        gap: 0.7rem;
+        padding: 1rem;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .loop-card strong {
+        color: #fff;
+        font-size: 1.08rem;
+      }
+
+      .loop-card p {
+        color: var(--muted);
+        line-height: 1.4;
+      }
+
+      .loop-list {
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      .loop-list span {
+        padding: 0.56rem 0.66rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 9px;
+        color: #dcdad4;
+        background: rgba(0, 0, 0, 0.22);
+        font-family: var(--mono);
+        font-size: 0.78rem;
+      }
+
+      .evidence-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.62rem;
+      }
+
+      .evidence-card {
+        display: grid;
+        gap: 0.5rem;
+        min-height: 142px;
+        padding: 0.74rem;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background:
+          linear-gradient(135deg, rgba(255, 190, 34, 0.07), transparent 36%),
+          rgba(255, 255, 255, 0.045);
+      }
+
+      .evidence-card.featured {
+        grid-column: span 2;
+        min-height: 264px;
+      }
+
+      .evidence-card.hermes-proof {
+        grid-column: span 2;
+        align-content: start;
+      }
+
+      .evidence-card h3 {
+        font-size: 0.98rem;
+      }
+
+      .evidence-card p {
+        color: var(--muted);
+        font-size: 0.8rem;
+        line-height: 1.3;
+      }
+
+      .evidence-terminal {
+        min-height: 70px;
+        padding: 0.58rem;
+        border: 1px solid rgba(125, 255, 180, 0.18);
+        border-radius: 9px;
+        color: #d8f6df;
+        background: rgba(1, 13, 8, 0.56);
+        font-family: var(--mono);
+        font-size: 0.61rem;
+        line-height: 1.32;
+      }
+
+      .vault-readout {
+        display: grid;
+        gap: 0.48rem;
+        padding: 0.58rem;
+        border: 1px solid rgba(185, 167, 255, 0.22);
+        border-radius: 10px;
+        background:
+          radial-gradient(circle at 12% 0%, rgba(185, 167, 255, 0.14), transparent 34%),
+          rgba(0, 0, 0, 0.3);
+      }
+
+      .vault-stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.36rem;
+      }
+
+      .vault-stats span {
+        padding: 0.36rem 0.42rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: #dcd7ff;
+        background: rgba(255, 255, 255, 0.045);
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        line-height: 1.2;
+      }
+
+      .vault-stats b {
+        display: block;
+        color: #fff;
+        font-size: 0.78rem;
+      }
+
+      .vault-code {
+        margin: 0;
+        color: #d8f6df;
+        font-family: var(--mono);
+        font-size: 0.57rem;
+        line-height: 1.32;
+        white-space: pre-wrap;
+      }
+
+      .crm-inspector {
+        display: grid;
+        grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.18fr) minmax(0, 0.96fr);
+        gap: 1rem;
+        align-items: stretch;
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .crm-inspector h3 {
+        margin-bottom: 0.45rem;
+        color: #fff;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .crm-record-fields,
+      .crm-source-trail,
+      .crm-command-strip {
+        display: grid;
+        gap: 0.48rem;
+        align-content: start;
+      }
+
+      .crm-record-fields dl {
+        display: grid;
+        grid-template-columns: 5.6rem 1fr;
+        gap: 0.38rem 0.7rem;
+        margin: 0;
+        padding: 0.6rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .crm-record-fields dt,
+      .crm-source-trail dt {
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .crm-record-fields dd,
+      .crm-source-trail dd {
+        margin: 0;
+        color: #efeaff;
+        font-size: 0.76rem;
+        line-height: 1.28;
+      }
+
+      .crm-association-code {
+        margin: 0;
+        padding: 0.58rem;
+        border-left: 2px solid var(--gold);
+        color: #d8f6df;
+        background: rgba(1, 13, 8, 0.46);
+        font-family: var(--mono);
+        font-size: 0.57rem;
+        line-height: 1.35;
+        white-space: pre-wrap;
+      }
+
+      .crm-graph {
+        display: grid;
+        gap: 0.55rem;
+        align-content: start;
+      }
+
+      .crm-mini-graph {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .crm-command-strip {
+        padding-top: 0.62rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .crm-command-strip code {
+        color: var(--gold);
+        font-family: var(--mono);
+        font-size: 0.58rem;
+      }
+
+      .crm-command-strip p {
+        margin: 0;
+        color: #d8f6df;
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        line-height: 1.35;
+      }
+
+      .crm-source-trail dl {
+        display: grid;
+        gap: 0.44rem;
+        margin: 0;
+      }
+
+      .crm-timeline {
+        display: grid;
+        gap: 0.42rem;
+        margin: 0;
+        padding: 0.58rem 0 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        list-style: none;
+      }
+
+      .crm-timeline li {
+        display: grid;
+        grid-template-columns: 5.2rem 1fr;
+        gap: 0.62rem;
+        color: var(--muted);
+        font-size: 0.72rem;
+        line-height: 1.28;
+      }
+
+      .crm-timeline time {
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        font-weight: 800;
+      }
+
+      .crm-proof-thumb {
+        margin-top: 0.16rem;
+      }
+
+      .crm-proof-thumb,
+      .crm-proof-thumb img {
+        min-height: 0;
+      }
+
+      .crm-proof-thumb img {
+        max-height: 118px;
+        object-fit: cover;
+        object-position: top center;
+      }
+
+      .hermes-shots {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.55rem;
+      }
+
+      .telegram-shots {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.42rem;
+      }
+
+      .hermes-shots .shot-frame img {
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        object-position: top center;
+      }
+
+      .telegram-shots .shot-frame img {
+        aspect-ratio: 3 / 4;
+        max-height: 190px;
+        object-fit: cover;
+        object-position: top center;
+      }
+
+      .proof-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.36rem;
+      }
+
+      .proof-tags span {
+        padding: 0.24rem 0.42rem;
+        border: 1px solid rgba(255, 190, 34, 0.24);
+        border-radius: 999px;
+        color: #ffe6a1;
+        background: rgba(255, 190, 34, 0.07);
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        font-weight: 800;
+      }
+
+      .proof-source {
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.58rem;
+        line-height: 1.35;
+      }
+
+      .account-route {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: 1rem;
+      }
+
+      .route-stack {
+        display: grid;
+        gap: 0.62rem;
+      }
+
+      .route-pill {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.6rem;
+        align-items: start;
+        padding: 0.75rem;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: rgba(255, 255, 255, 0.045);
+      }
+
+      .route-pill b {
+        display: grid;
+        place-items: center;
+        width: 1.6rem;
+        height: 1.6rem;
+        border-radius: 6px;
+        color: #1f1300;
+        background: var(--gold);
+        font-family: var(--mono);
+        font-size: 0.74rem;
+      }
+
+      .route-pill strong {
+        display: block;
+        color: #fff;
+        margin-bottom: 0.18rem;
+      }
+
+      .route-pill span {
+        color: var(--muted);
+        line-height: 1.35;
+      }
+
+      .demo {
+        display: grid;
+        align-content: start;
+        gap: 1rem;
+      }
+
+      .query-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0.6rem;
+      }
+
+      .query-row input {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.9rem 1rem;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.06);
+        outline: none;
+      }
+
+      .query-row input:focus {
+        border-color: rgba(185, 167, 255, 0.78);
+      }
+
+      .button {
+        border: 1px solid rgba(55, 198, 208, 0.58);
+        border-radius: 10px;
+        padding: 0.88rem 1rem;
+        color: #031112;
+        background: linear-gradient(180deg, #9af6ff, var(--gold-2));
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible {
+        outline: 2px solid rgba(154, 246, 255, 0.92);
+        outline-offset: 3px;
+      }
+
+      .button.secondary {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .demo-output {
+        display: grid;
+        gap: 0.62rem;
+        min-height: 420px;
+        max-height: min(62vh, 520px);
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0.82rem;
+        background: rgba(0, 0, 0, 0.28);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        line-height: 1.42;
+      }
+
+      .trace-shell {
+        display: grid;
+        place-items: center;
+        min-height: 100%;
+        border: 1px dashed rgba(255, 255, 255, 0.18);
+        border-radius: 10px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .trace-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.62rem 0.72rem;
+        border: 1px solid rgba(55, 198, 208, 0.18);
+        border-radius: 10px;
+        color: #d9fbff;
+        background: rgba(55, 198, 208, 0.08);
+      }
+
+      .trace-meta strong {
+        color: #f3feff;
+      }
+
+      .trace-step {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 10px;
+        background:
+          linear-gradient(135deg, rgba(125, 199, 255, 0.06), transparent 36%),
+          rgba(255, 255, 255, 0.035);
+        opacity: 0.46;
+        transform: translateY(4px);
+        transition:
+          border-color 180ms ease,
+          opacity 180ms ease,
+          transform 180ms ease;
+      }
+
+      .trace-step.running {
+        border-color: rgba(55, 198, 208, 0.62);
+        opacity: 1;
+        transform: translateY(0);
+        box-shadow: 0 0 0 1px rgba(55, 198, 208, 0.12);
+      }
+
+      .trace-step.complete {
+        border-color: rgba(125, 255, 180, 0.32);
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .trace-step-header {
+        display: grid;
+        width: 100%;
+        grid-template-columns: auto 1fr auto;
+        gap: 0.55rem;
+        align-items: center;
+        border: 0;
+        padding: 0.62rem 0.66rem;
+        color: inherit;
+        background: transparent;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .trace-index {
+        display: grid;
+        place-items: center;
+        width: 1.55rem;
+        height: 1.55rem;
+        border-radius: 6px;
+        color: #101312;
+        background: var(--green);
+        font-weight: 900;
+      }
+
+      .trace-title {
+        display: grid;
+        gap: 0.12rem;
+      }
+
+      .trace-title strong {
+        color: #fff;
+        font-size: 0.78rem;
+      }
+
+      .trace-title span,
+      .trace-state {
+        color: var(--muted);
+      }
+
+      .trace-state {
+        justify-self: end;
+      }
+
+      .trace-output {
+        padding: 0 0.66rem 0.66rem 2.76rem;
+        color: #d8f6df;
+      }
+
+      .trace-raw {
+        display: none;
+        margin: 0 0.66rem 0.66rem 2.76rem;
+        padding: 0.56rem;
+        overflow: auto;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        color: #d7d2ff;
+        background: rgba(0, 0, 0, 0.34);
+        white-space: pre-wrap;
+      }
+
+      .trace-step.expanded .trace-raw {
+        display: block;
+      }
+
+      .trace-summary {
+        display: grid;
+        gap: 0.42rem;
+        padding: 0.72rem;
+        border: 1px solid rgba(185, 167, 255, 0.34);
+        border-radius: 10px;
+        color: #efeaff;
+        background: rgba(185, 167, 255, 0.08);
+      }
+
+      .trace-summary b {
+        color: #fff;
+      }
+
+      .proof-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+      }
+
+      .screenshot-card {
+        display: grid;
+        gap: 0.75rem;
+        min-height: 270px;
+      }
+
+      .screenshot-card.wide-proof {
+        grid-column: span 2;
+      }
+
+      .proof-shots {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.65rem;
+      }
+
+      .shot-frame {
+        min-height: 118px;
+      }
+
+      .shot-frame img {
+        height: 100%;
+        min-height: 118px;
+        aspect-ratio: 16 / 9;
+      }
+
+      .proof-copy {
+        display: grid;
+        gap: 0.42rem;
+      }
+
+      .mini-window {
+        min-height: 160px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #111318;
+      }
+
+      .mini-window.obsidian {
+        display: grid;
+        grid-template-columns: 0.7fr 1fr 1fr;
+        gap: 1px;
+        background: var(--line);
+      }
+
+      .mini-window.obsidian div {
+        padding: 0.72rem;
+        background: #202124;
+      }
+
+      .mini-window.obsidian span {
+        display: block;
+        height: 0.45rem;
+        margin: 0.44rem 0;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .mini-window.docker {
+        padding: 0.85rem;
+        background: #071423;
+      }
+
+      .docker-row {
+        display: grid;
+        grid-template-columns: 1fr 0.4fr 0.45fr;
+        gap: 0.35rem;
+        margin: 0.38rem 0;
+        padding: 0.42rem;
+        border: 1px solid rgba(125, 199, 255, 0.14);
+        border-radius: 5px;
+        color: #b7daf9;
+        font-family: var(--mono);
+        font-size: 0.67rem;
+      }
+
+      .mini-window.hermes-ascii {
+        display: grid;
+        grid-template-columns: 0.8fr 1fr;
+        gap: 0.7rem;
+        padding: 0.85rem;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        line-height: 1.18;
+      }
+
+      .ascii {
+        color: var(--gold);
+        white-space: pre;
+      }
+
+      .cta-box {
+        max-width: 860px;
+        margin-inline: auto;
+        padding: clamp(1.2rem, 3vw, 2rem);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 18px;
+        background:
+          linear-gradient(135deg, rgba(55, 198, 208, 0.12), transparent 45%),
+          var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .cta-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.7rem;
+        margin-top: 1.4rem;
+      }
+
+      .cta-evidence-table {
+        width: 100%;
+        margin-top: 1.25rem;
+        border-collapse: collapse;
+        font-size: 0.84rem;
+      }
+
+      .cta-evidence-table th,
+      .cta-evidence-table td {
+        padding: 0.52rem 0.6rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .cta-evidence-table thead th {
+        font-family: var(--mono);
+        font-size: 0.66rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--dim);
+        border-bottom-color: var(--line);
+      }
+
+      .cta-evidence-table td:first-child {
+        color: var(--muted);
+        width: 34%;
+      }
+
+      .cta-evidence-table a {
+        color: var(--gold);
+        word-break: break-word;
+      }
+
+      .slide-counter {
+        position: fixed;
+        left: 1rem;
+        bottom: 1rem;
+        z-index: 13;
+        color: rgba(255, 255, 255, 0.34);
+        font-family: var(--mono);
+        font-size: 0.75rem;
+      }
+
+      .mobile-only {
+        display: none;
+      }
+
+      /* Minimal technical pass: remove decorative surface and use structure over cards. */
+      :root {
+        --bg: #060607;
+        --panel: transparent;
+        --panel-strong: #0d0e10;
+        --line: rgba(255, 255, 255, 0.14);
+        --line-strong: rgba(255, 255, 255, 0.28);
+        --text: #f4f4f1;
+        --muted: #a1a19c;
+        --dim: #676763;
+        --gold: #37c6d0;
+        --gold-2: #1a9ba1;
+        --violet: #37c6d0;
+        --green: #86efac;
+        --blue: #93c5fd;
+        --red: #f87171;
+        --shadow: none;
+      }
+
+      body {
+        background: var(--bg);
+      }
+
+      body::before,
+      body::after {
+        display: none;
+      }
+
+      .slide {
+        transform: translateX(16px);
+        transition:
+          opacity 180ms ease,
+          transform 180ms ease,
+          visibility 180ms ease;
+      }
+
+      .slide.active,
+      .slide.back {
+        transform: translateX(0);
+      }
+
+      .frame {
+        width: min(1100px, calc(100vw - clamp(5rem, 8vw, 7rem)));
+        gap: clamp(0.85rem, 1.7vw, 1.25rem);
+      }
+
+      h1 {
+        font-size: clamp(3rem, 8vw, 6.8rem);
+        line-height: 0.92;
+        letter-spacing: -0.07em;
+        text-shadow: none;
+      }
+
+      h2 {
+        font-size: clamp(2.05rem, 4.6vw, 4.35rem);
+        line-height: 0.98;
+        letter-spacing: -0.06em;
+      }
+
+      h3 {
+        letter-spacing: -0.035em;
+      }
+
+      .lead {
+        color: #d7d7d2;
+        line-height: 1.34;
+      }
+
+      .eyebrow,
+      .tag,
+      .route-card small,
+      .flow-step strong {
+        color: var(--gold);
+        letter-spacing: 0.12em;
+      }
+
+      .brand-mark {
+        width: clamp(5.8rem, 10vw, 7.5rem);
+        height: auto;
+        margin-bottom: 1.5rem;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .brand-mark::after {
+        display: none;
+      }
+
+      .brand-mark img {
+        width: 100%;
+        filter: none;
+      }
+
+      .byline {
+        gap: 0.4rem;
+        margin-top: 1.8rem;
+        font-size: clamp(0.92rem, 1.6vw, 1.08rem);
+        font-weight: 500;
+      }
+
+      .quest-map {
+        width: min(190px, 24vw);
+        min-height: 0;
+        padding: 0.38rem 0.42rem 0.42rem;
+        border: 0;
+        border-left: 1px solid var(--line);
+        border-radius: 0;
+        background: rgba(6, 6, 7, 0.82);
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+
+      .quest-map-toggle {
+        border-radius: 0;
+        border-color: var(--line);
+        background: transparent;
+      }
+
+      .quest-map-panel {
+        transition:
+          max-height 0.22s ease,
+          opacity 0.18s ease;
+      }
+
+      .quest-title {
+        font-size: 0.6rem;
+      }
+
+      .quest-map-compact-label {
+        font-size: 0.56rem;
+      }
+
+      .quest-map-progress {
+        font-size: 0.52rem;
+      }
+
+      .quest-breadcrumb {
+        font-size: 0.49rem;
+      }
+
+      .map-grid-scroll {
+        margin-inline: 0;
+        padding-inline: 0;
+      }
+
+      .map-grid {
+        gap: 3px;
+        grid-auto-columns: var(--map-column-size, 24px);
+      }
+
+      .map-cell {
+        border: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: transparent;
+      }
+
+      .map-cell.route {
+        border-color: rgba(255, 255, 255, 0.18);
+        background: transparent;
+      }
+
+      .map-cell.detail {
+        border-color: rgba(255, 255, 255, 0.12);
+        background: transparent;
+      }
+
+      .map-cell.ancestor,
+      .map-cell.descendant:not(.active) {
+        background: rgba(55, 198, 208, 0.28);
+      }
+
+      .map-cell.route.visited:not(.active) {
+        border-color: rgba(255, 255, 255, 0.32);
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      .map-cell.active {
+        border-color: var(--gold);
+        background: var(--gold);
+        color: #070707;
+        box-shadow:
+          0 0 0 1px rgba(55, 198, 208, 0.5),
+          0 0 12px rgba(55, 198, 208, 0.55),
+          0 0 24px rgba(55, 198, 208, 0.25);
+      }
+
+      .panel,
+      .card,
+      .terminal,
+      .graph-panel,
+      .route-card,
+      .loop-card,
+      .evidence-card,
+      .route-pill,
+      .trace-step,
+      .trace-summary,
+      .mini-window,
+      .cta-box {
+        border-radius: 0;
+        box-shadow: none;
+        backdrop-filter: none;
+        background: transparent;
+      }
+
+      .panel,
+      .card,
+      .graph-panel,
+      .loop-card,
+      .evidence-card,
+      .route-pill,
+      .trace-step,
+      .trace-summary,
+      .cta-box {
+        border: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .card:hover,
+      .card:focus-within {
+        transform: none;
+        background: transparent;
+      }
+
+      .tag {
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        font-size: 0.66rem;
+      }
+
+      .terminal {
+        border: 1px solid var(--line);
+        background: #0b0c0e;
+      }
+
+      .terminal-bar {
+        padding: 0.52rem 0.72rem;
+        background: transparent;
+      }
+
+      .dot {
+        width: 0.44rem;
+        height: 0.44rem;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .button {
+        border-radius: 0;
+        color: #041011;
+        background: var(--gold);
+      }
+
+      .button.secondary {
+        border-color: var(--line);
+        color: var(--text);
+        background: transparent;
+      }
+
+      .nav-arrow {
+        color: rgba(255, 255, 255, 0.44);
+      }
+
+      .nav-arrow::before {
+        border-width: 2px;
+      }
+
+      .thesis-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(1rem, 3vw, 2.4rem);
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .thesis-list article {
+        display: grid;
+        gap: 0.45rem;
+      }
+
+      .thesis-list strong,
+      .metric-row strong,
+      .plain-list strong,
+      .route-table strong {
+        color: #fff;
+      }
+
+      .thesis-list p,
+      .plain-list p,
+      .route-table p {
+        color: var(--muted);
+        line-height: 1.38;
+      }
+
+      .signal-table,
+      .route-table,
+      .proof-table {
+        display: grid;
+        border-top: 1px solid var(--line);
+      }
+
+      .signal-row,
+      .route-row,
+      .proof-row {
+        display: grid;
+        gap: 1rem;
+        align-items: start;
+        padding: 0.72rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      }
+
+      .signal-row {
+        grid-template-columns: 0.82fr 1.5fr 1fr;
+      }
+
+      .route-row,
+      .proof-row {
+        grid-template-columns: 0.72fr 1.25fr 1fr;
+      }
+
+      .signal-row span,
+      .route-row span,
+      .proof-row span,
+      .metric-label {
+        color: var(--dim);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .split-head {
+        display: grid;
+        gap: 0.8rem;
+        max-width: 900px;
+      }
+
+      .diagram {
+        width: 100%;
+        border-top: 1px solid var(--line);
+        padding-top: 1rem;
+      }
+
+      .diagram svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      .diagram text {
+        fill: var(--text);
+        font-family: var(--mono);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .diagram .muted-text {
+        fill: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .diagram .node {
+        fill: #0b0c0e;
+        stroke: rgba(255, 255, 255, 0.28);
+      }
+
+      .diagram .node-accent {
+        stroke: var(--gold);
+      }
+
+      .diagram .edge {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.38);
+        stroke-width: 1.3;
+      }
+
+      .diagram .edge-accent {
+        stroke: var(--gold);
+      }
+
+      .diagram .label {
+        fill: var(--muted);
+        font-size: 10px;
+      }
+
+      .flywheel-diagram {
+        max-width: 1040px;
+      }
+
+      .diagram .source-text {
+        fill: #d5d4ce;
+        font-size: 10px;
+        font-weight: 650;
+      }
+
+      .flywheel-notes {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.85rem;
+        padding-top: 0.68rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .flywheel-notes article {
+        display: grid;
+        gap: 0.28rem;
+        min-width: 0;
+      }
+
+      .flywheel-notes strong {
+        color: #fff;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .flywheel-notes p {
+        color: var(--muted);
+        font-size: 0.8rem;
+        line-height: 1.28;
+      }
+
+      .depth-map {
+        max-width: 960px;
+      }
+
+      .plain-list {
+        display: grid;
+        gap: 0.72rem;
+        padding-top: 0.8rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .plain-list article {
+        display: grid;
+        grid-template-columns: 8rem 1fr;
+        gap: 1rem;
+        align-items: baseline;
+        padding-bottom: 0.7rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .metric-row b {
+        display: block;
+        color: #fff;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        letter-spacing: -0.06em;
+      }
+
+      .obsidian-proof-hero,
+      .shot-frame {
+        border-color: var(--line);
+        border-radius: 0;
+        background: #0b0c0e;
+      }
+
+      .obsidian-mark {
+        border-color: var(--line);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .obsidian-proof-hero figcaption,
+      .shot-frame figcaption {
+        border: 0;
+        border-radius: 0;
+        background: rgba(6, 6, 7, 0.78);
+        backdrop-filter: none;
+      }
+
+      .evidence-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.1rem;
+      }
+
+      .evidence-card {
+        min-height: 0;
+        padding: 0.8rem 0 0;
+      }
+
+      .evidence-card.featured,
+      .evidence-card.hermes-proof {
+        grid-column: span 1;
+      }
+
+      .evidence-terminal,
+      .vault-readout,
+      .vault-stats span,
+      .trace-meta,
+      .trace-raw {
+        border-radius: 0;
+        background: #0b0c0e;
+      }
+
+      .demo-output {
+        min-height: 0;
+        max-height: none;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .trace-shell {
+        min-height: 240px;
+        border-radius: 0;
+      }
+
+      .trace-step-header {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .trace-index,
+      .route-pill b {
+        border-radius: 0;
+        background: var(--gold);
+      }
+
+      .account-route {
+        align-items: start;
+      }
+
+      .route-stack {
+        border-top: 1px solid var(--line);
+      }
+
+      .route-pill {
+        padding: 0.62rem 0;
+        border-top: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .compact-demo .demo-output {
+        max-height: calc(100dvh - 16rem);
+        overflow: hidden;
+      }
+
+      .slide[data-route="proof"] .frame {
+        align-items: start;
+      }
+
+      .slide[data-route="proof-obsidian"] .proof-shots,
+      .slide[data-route="memory-proof"] .obsidian-proof-hero img,
+      .slide[data-route="account-proof"] .obsidian-proof-hero img {
+        max-height: 330px;
+      }
+
+      .slide[data-route="proof-obsidian"] .vault-code {
+        max-height: 7rem;
+        overflow: hidden;
+      }
+
+      .slide[data-route="proof-obsidian"] .frame {
+        gap: 0.72rem;
+      }
+
+      .slide[data-route="proof-obsidian"] h2 {
+        max-width: calc(100% - 240px);
+        font-size: clamp(2rem, 4vw, 3.55rem);
+      }
+
+      .slide[data-route="routes"] .frame,
+      .slide[data-route="proof"] .frame {
+        align-content: start;
+      }
+
+      .slide[data-route="routes"] h2 {
+        max-width: 760px;
+        font-size: clamp(2rem, 4.2vw, 3.75rem);
+      }
+
+      .slide[data-route="routes"] .grid-2 {
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 0.72fr);
+        gap: 0.85rem;
+      }
+
+      .slide[data-route="routes"] .route-card {
+        display: grid;
+        align-content: start;
+        gap: 0.18rem;
+        min-height: 116px;
+        padding: 0.82rem;
+      }
+
+      .slide[data-route="routes"] .route-card small {
+        margin-bottom: 0.18rem;
+        font-size: 0.66rem;
+      }
+
+      .slide[data-route="routes"] .route-card strong {
+        display: block;
+        line-height: 1.1;
+      }
+
+      .slide[data-route="routes"] .route-card p {
+        font-size: 0.82rem;
+        line-height: 1.25;
+      }
+
+      .slide[data-route="routes"] .route-output {
+        gap: 0.55rem;
+      }
+
+      .slide[data-route="routes"] .route-output .headline {
+        font-size: clamp(1.15rem, 2vw, 1.55rem);
+        line-height: 1.04;
+      }
+
+      .slide[data-route="proof"] h2 {
+        max-width: calc(100% - 240px);
+        font-size: clamp(2rem, 4vw, 3.55rem);
+      }
+
+      .slide[data-route="proof"] .frame {
+        gap: 0.58rem;
+      }
+
+      .slide[data-route="proof"] .evidence-grid {
+        gap: 0.52rem;
+      }
+
+      .slide[data-route="proof"] .evidence-card {
+        gap: 0.42rem;
+        min-height: 112px;
+        padding: 0.58rem;
+      }
+
+      .slide[data-route="proof"] .evidence-card.featured,
+      .slide[data-route="proof"] .evidence-card.hermes-proof {
+        min-height: auto;
+      }
+
+      .slide[data-route="proof"] .evidence-card h3 {
+        font-size: 0.84rem;
+        line-height: 1.08;
+      }
+
+      .slide[data-route="proof"] .evidence-card p {
+        font-size: 0.68rem;
+        line-height: 1.22;
+      }
+
+      .slide[data-route="proof"] .proof-shots,
+      .slide[data-route="proof"] .hermes-shots,
+      .slide[data-route="proof"] .telegram-shots {
+        gap: 0.42rem;
+      }
+
+      .slide[data-route="proof"] .shot-frame,
+      .slide[data-route="proof"] .shot-frame img {
+        min-height: 74px;
+      }
+
+      .slide[data-route="proof"] .hermes-shots .shot-frame img {
+        aspect-ratio: 16 / 9;
+      }
+
+      .slide[data-route="proof"] .vault-readout {
+        gap: 0.28rem;
+        padding: 0.42rem;
+      }
+
+      .slide[data-route="proof"] .vault-stats span {
+        padding: 0.26rem 0.34rem;
+        font-size: 0.5rem;
+      }
+
+      .slide[data-route="proof"] .vault-stats b {
+        font-size: 0.68rem;
+      }
+
+      .slide[data-route="proof"] .vault-code {
+        max-height: 5.4rem;
+        overflow: hidden;
+        font-size: 0.49rem;
+        line-height: 1.24;
+      }
+
+      .slide[data-route="proof"] .evidence-terminal {
+        min-height: 52px;
+        font-size: 0.52rem;
+      }
+
+      .slide[data-route="proof"] .proof-tags span,
+      .slide[data-route="proof"] .proof-source {
+        font-size: 0.5rem;
+      }
+
+      .slide[data-route="demo"] .demo-output {
+        min-height: 360px;
+        max-height: min(54vh, 460px);
+      }
+
+      .slide[data-route="account"] h2,
+      .slide[data-route="flywheel"] h2 {
+        font-size: clamp(2rem, 4.2vw, 3.8rem);
+      }
+
+      .slide[data-route="flywheel"] .frame {
+        gap: 0.58rem;
+      }
+
+      .slide[data-route="account"] .route-pill {
+        padding: 0.62rem;
+      }
+
+      .slide[data-route="account"] .route-pill span {
+        font-size: 0.9rem;
+        line-height: 1.25;
+      }
+
+      @media (max-width: 980px) {
+        .slide {
+          padding: 1rem 3rem;
+        }
+
+        .frame {
+          width: calc(100vw - 5.4rem);
+          max-height: calc(100dvh - 2rem);
+          gap: 0.72rem;
+        }
+
+        h2 {
+          max-width: calc(100% - 174px);
+          font-size: clamp(1.9rem, 5vw, 3rem);
+        }
+
+        .lead {
+          font-size: clamp(0.92rem, 1.9vw, 1.12rem);
+        }
+
+        .panel {
+          padding: 0.85rem;
+        }
+
+        .card {
+          min-height: 136px;
+          padding: 0.85rem;
+        }
+
+        .terminal-body {
+          padding: 0.72rem;
+          font-size: 0.67rem;
+        }
+
+        .quest-map {
+          top: 0.55rem;
+          right: 0.55rem;
+          width: min(158px, 23vw);
+          min-height: auto;
+          padding: 0.36rem 0.38rem 0.4rem;
+        }
+
+        .quest-title {
+          font-size: 0.54rem;
+        }
+
+        .quest-map-progress {
+          font-size: 0.48rem;
+        }
+
+        .quest-subtitle-line {
+          font-size: 0.4rem;
+        }
+
+        .quest-breadcrumb {
+          display: none;
+        }
+
+        .quest-legend {
+          margin-top: 0.26rem;
+          font-size: 0.38rem;
+        }
+
+        .map-grid {
+          gap: 2px;
+          grid-auto-columns: var(--map-column-size, 20px);
+        }
+
+        .map-cell {
+          min-width: var(--map-cell-size, 20px);
+          min-height: var(--map-cell-size, 16px);
+          font-size: 0.38rem;
+        }
+
+        .grid-2 {
+          gap: 0.75rem;
+        }
+
+        .route-grid {
+          gap: 0.45rem;
+        }
+
+        .slide[data-route="routes"] .route-card {
+          min-height: 88px;
+          padding: 0.58rem;
+        }
+
+        .slide[data-route="routes"] .route-card p {
+          font-size: 0.7rem;
+        }
+
+        .slide[data-route="routes"] .route-card strong {
+          font-size: 0.82rem;
+        }
+
+        .slide[data-route="routes"] .route-output .headline {
+          font-size: 1.2rem;
+        }
+
+        .slide[data-route="proof"] h2 {
+          max-width: calc(100% - 174px);
+        }
+
+        .slide[data-route="proof"] .shot-frame,
+        .slide[data-route="proof"] .shot-frame img {
+          min-height: 62px;
+        }
+
+        .slide[data-route="proof"] .evidence-card {
+          padding: 0.48rem;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .slide {
+          place-items: start center;
+          padding: 4.8rem 1rem 5rem;
+          overflow-y: auto;
+          display: none;
+        }
+
+        .slide.active {
+          display: grid;
+        }
+
+        .frame {
+          width: 100%;
+          max-height: none;
+          min-height: auto;
+          align-content: start;
+        }
+
+        .grid-2,
+        .grid-3,
+        .route-grid,
+        .loop-grid,
+        .evidence-grid,
+        .account-route,
+        .proof-grid,
+        .flywheel-notes,
+        .crm-inspector,
+        .vault-stats {
+          grid-template-columns: 1fr;
+        }
+
+        .route-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .proof-shots,
+        .hermes-shots {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .demo-output {
+          max-height: none;
+        }
+
+        .evidence-card.featured,
+        .evidence-card.hermes-proof,
+        .screenshot-card.wide-proof {
+          grid-column: auto;
+        }
+
+        h2 {
+          max-width: calc(100% - 164px);
+          font-size: clamp(2rem, 7vw, 3.35rem);
+        }
+
+        .flow {
+          grid-template-columns: 1fr;
+        }
+
+        .flow-step::after {
+          display: none;
+        }
+
+        .quest-map {
+          width: min(154px, 30vw);
+          min-height: 0;
+        }
+
+        .tool-map {
+          min-height: auto;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.65rem;
+        }
+
+        .tool-node {
+          position: static;
+          width: auto;
+          min-height: 84px;
+        }
+
+        .memory-tool-map .tool-node {
+          width: auto;
+        }
+
+        .map-line {
+          display: none;
+        }
+
+        .nav-arrow {
+          top: auto;
+          bottom: 0.7rem;
+          height: 3rem;
+          transform: none;
+        }
+
+        .nav-arrow:hover {
+          transform: scale(1.06);
+        }
+
+        .nav-hint {
+          display: none;
+        }
+
+        .mobile-only {
+          display: inline;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .quest-map {
+          right: 0.5rem;
+          transform: none;
+        }
+
+        h2 {
+          max-width: 100%;
+          padding-top: 4.8rem;
+        }
+
+        .pixel-title {
+          font-size: clamp(2rem, 17vw, 4.2rem);
+        }
+
+        .query-row {
+          grid-template-columns: 1fr;
+        }
+
+        .route-grid,
+        .proof-shots,
+        .hermes-shots {
+          grid-template-columns: 1fr;
+        }
+
+        .mini-window.obsidian,
+        .mini-window.hermes-ascii {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>growth_hacker_v7_2026</h1>
-    <p>
-      Railway is serving this placeholder from <code>public/</code>. Replace with a
-      production build (for example Vite <code>dist/</code>) and point
-      <code>npm start</code> at that directory when you are ready.
-    </p>
+    <main class="deck" aria-live="polite">
+      <section class="slide active" data-route="home" data-title="Home" aria-labelledby="home-title">
+        <div class="frame center">
+          <div class="brand-mark" aria-hidden="true">
+            <img src="assets/v7labs-logo.svg" alt="" />
+          </div>
+          <p class="eyebrow">V7Labs Review Deck</p>
+          <h1 id="home-title">V7 GTM Engine</h1>
+          <p class="lead">Proposal: turn private-market signals into evidence-backed routes V7 can review, trust, and reuse.</p>
+          <div class="byline">
+            <span>by <strong>Francisco Terpolilli</strong></span>
+            <span>May 2026</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="why" data-title="Why" aria-labelledby="why-title">
+        <div class="frame">
+          <p class="eyebrow">01 / Timing-graph lens</p>
+          <h2 id="why-title">GTM is not a data problem; it is a timing graph.</h2>
+          <p class="lead muted">We propose treating GTM as a timing graph: relations, decaying intent, and compounding memory—not only flat targets.</p>
+          <div class="thesis-list" aria-label="Timing-graph premise">
+            <article>
+              <span class="tag">Relation</span>
+              <h3>Accounts sit inside networks.</h3>
+              <p>Investors, alumni, events, customers, competitors, and founders create usable paths.</p>
+            </article>
+            <article>
+              <span class="tag">Timing</span>
+              <h3>Intent is perishable.</h3>
+              <p>Fundraises, hiring, leadership moves, and events create narrow windows.</p>
+            </article>
+            <article>
+              <span class="tag">Memory</span>
+              <h3>Each run can compound into the next.</h3>
+              <p>Company, person, route, source, and outcome notes become reusable CRM context.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="data" data-title="Data Layer" aria-labelledby="data-title">
+        <div class="frame grid-2">
+          <div>
+            <p class="eyebrow">02 / Engine Inputs</p>
+            <h2 id="data-title">This engine treats surfaces where private-market buying windows show up as first-class inputs—not only exhaustive lists.</h2>
+            <p class="lead muted">Source coverage feeds repeatable calls, browser verification, and CRM writeback.</p>
+          </div>
+          <div class="signal-table" aria-label="Data sources and their value">
+            <div class="signal-row"><span>Source</span><span>Value</span><span>Used for</span></div>
+            <div class="signal-row"><strong>Specter</strong><p>Private-market signals, movers, investors, company context.</p><p>Timing and route evidence.</p></div>
+            <div class="signal-row"><strong>Cala</strong><p>Entity resolution, investor graph, outreach paths by domain.</p><p>False-match reduction.</p></div>
+            <div class="signal-row"><strong>Luma + Browser Use</strong><p>Events, organizers, attendee pages, and other pingable public surfaces.</p><p>Reason-to-reach-out source trail.</p></div>
+            <div class="signal-row"><strong>Nitter / X</strong><p>Public signal surface, competitor-client farming, social intent.</p><p>Account timing and opener evidence.</p></div>
+            <div class="signal-row"><strong>LinkedIn + Sales Navigator</strong><p>People and account discovery, filters, relationship paths, job changes.</p><p>Warm routes and recent-joiner triggers.</p></div>
+            <div class="signal-row"><strong>Hermes + Obsidian</strong><p>Research, CRM writeback, source trail, next action.</p><p>Reusable memory.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="source-flow" data-title="Source Flow" aria-labelledby="source-flow-title">
+        <div class="frame">
+          <div class="split-head">
+            <p class="eyebrow">02A / Source-To-CRM Flow</p>
+            <h2 id="source-flow-title">Signal becomes CRM memory through a narrow, auditable path.</h2>
+          </div>
+          <div class="diagram" aria-label="Data to Hermes to Obsidian CRM flow">
+            <svg viewBox="0 0 1100 250" role="img" aria-labelledby="source-flow-svg-title">
+              <title id="source-flow-svg-title">Data to research Hermes to route synthesis to Obsidian CRM to learning loop</title>
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="rgba(255,255,255,0.46)"></path>
+                </marker>
+                <marker id="arrow-accent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="#37c6d0"></path>
+                </marker>
+              </defs>
+              <path class="edge" marker-end="url(#arrow)" d="M150 112 H248"></path>
+              <path class="edge" marker-end="url(#arrow)" d="M380 112 H478"></path>
+              <path class="edge" marker-end="url(#arrow)" d="M610 112 H708"></path>
+              <path class="edge" marker-end="url(#arrow)" d="M840 112 H938"></path>
+              <path class="edge edge-accent" marker-end="url(#arrow-accent)" d="M1000 162 C1000 225 97 225 97 162"></path>
+              <rect class="node" x="40" y="62" width="130" height="100"></rect>
+              <text x="105" y="103" text-anchor="middle">data</text>
+              <text class="muted-text" x="105" y="128" text-anchor="middle">market + browser surfaces</text>
+              <rect class="node node-accent" x="250" y="62" width="150" height="100"></rect>
+              <text x="325" y="103" text-anchor="middle">research Hermes</text>
+              <text class="muted-text" x="325" y="128" text-anchor="middle">evidence packet</text>
+              <rect class="node" x="480" y="62" width="150" height="100"></rect>
+              <text x="555" y="103" text-anchor="middle">route synthesis</text>
+              <text class="muted-text" x="555" y="128" text-anchor="middle">ranked paths</text>
+              <rect class="node node-accent" x="710" y="62" width="150" height="100"></rect>
+              <text x="785" y="103" text-anchor="middle">Obsidian CRM</text>
+              <text class="muted-text" x="785" y="128" text-anchor="middle">linked records</text>
+              <rect class="node" x="940" y="62" width="130" height="100"></rect>
+              <text x="1005" y="103" text-anchor="middle">CRM Hermes</text>
+              <text class="muted-text" x="1005" y="128" text-anchor="middle">outreach + log</text>
+              <text class="label" x="550" y="238" text-anchor="middle">outcome and source quality feed the next run</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="agents" data-title="Agents" aria-labelledby="agents-title">
+        <div class="frame">
+          <p class="eyebrow">03 / Agent Layer</p>
+          <h2 id="agents-title">Hermes is split on purpose: research first, CRM second.</h2>
+          <div class="grid-2">
+            <div class="terminal">
+              <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <div class="terminal-body">
+                <strong class="accent">research-hermes</strong><br />
+                $ create route --market private-markets-ai<br />
+                <span class="ok">✓</span> Specter: company / people / private-market signals<br />
+                <span class="ok">✓</span> Cala: entity match + investor paths<br />
+                <span class="ok">✓</span> LinkedIn Sales Navigator + LinkedIn: people, job changes, warm paths<br />
+                <span class="ok">✓</span> Nitter / X + Luma: public signals, events, competitor/client pages<br />
+                <span class="ok">✓</span> Browser Use: capture, verify, and scrape pingable surfaces where APIs stop<br />
+                <br />
+                Output: evidence packet, warm paths, route hypothesis.
+              </div>
+            </div>
+            <div class="terminal">
+              <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <div class="terminal-body">
+                <strong class="accent">crm-hermes</strong><br />
+                $ resolve route --vault obsidian<br />
+                <span class="ok">✓</span> Company, people, deal, meeting, source notes<br />
+                <span class="ok">✓</span> HubSpot-shaped associations in markdown<br />
+                <span class="ok">✓</span> next action + priority + learning captured<br />
+                <br />
+                Output: a CRM graph the next run can trust.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="memory" data-title="Memory" aria-labelledby="memory-title">
+        <div class="frame grid-2">
+          <div>
+            <p class="eyebrow">04 / CRM Memory</p>
+            <h2 id="memory-title">Obsidian is the operating system for the GTM graph.</h2>
+            <p class="lead muted">V1 is live: company, people, deals, meetings, sources, and next actions are linked as markdown records.</p>
+          </div>
+          <div class="diagram" aria-label="Obsidian CRM entity graph">
+            <svg viewBox="0 0 620 430" role="img" aria-labelledby="entity-graph-title">
+              <title id="entity-graph-title">Company person investor event source deal relationship graph</title>
+              <defs>
+                <marker id="small-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                  <path d="M0,0 L7,3.5 L0,7 Z" fill="rgba(255,255,255,0.48)"></path>
+                </marker>
+              </defs>
+              <path class="edge" marker-end="url(#small-arrow)" d="M310 115 L150 205"></path>
+              <path class="edge" marker-end="url(#small-arrow)" d="M310 115 L470 205"></path>
+              <path class="edge" marker-end="url(#small-arrow)" d="M150 255 L300 330"></path>
+              <path class="edge" marker-end="url(#small-arrow)" d="M470 255 L320 330"></path>
+              <path class="edge edge-accent" marker-end="url(#small-arrow)" d="M310 115 L310 310"></path>
+              <path class="edge" marker-end="url(#small-arrow)" d="M95 330 L250 350"></path>
+              <path class="edge" marker-end="url(#small-arrow)" d="M525 330 L370 350"></path>
+              <rect class="node node-accent" x="225" y="42" width="170" height="74"></rect>
+              <text x="310" y="75" text-anchor="middle">Company</text>
+              <text class="muted-text" x="310" y="98" text-anchor="middle">account record</text>
+              <rect class="node" x="50" y="198" width="155" height="66"></rect>
+              <text x="128" y="226" text-anchor="middle">Person</text>
+              <text class="muted-text" x="128" y="247" text-anchor="middle">buyer / operator</text>
+              <rect class="node" x="415" y="198" width="155" height="66"></rect>
+              <text x="492" y="226" text-anchor="middle">Investor</text>
+              <text class="muted-text" x="492" y="247" text-anchor="middle">warm path</text>
+              <rect class="node node-accent" x="235" y="318" width="150" height="66"></rect>
+              <text x="310" y="346" text-anchor="middle">Deal</text>
+              <text class="muted-text" x="310" y="367" text-anchor="middle">next action</text>
+              <rect class="node" x="20" y="305" width="125" height="54"></rect>
+              <text x="82" y="336" text-anchor="middle">Event</text>
+              <rect class="node" x="475" y="305" width="125" height="54"></rect>
+              <text x="538" y="336" text-anchor="middle">Source</text>
+              <text class="label" x="225" y="186">employs / knows</text>
+              <text class="label" x="405" y="186">funded by</text>
+              <text class="label" x="326" y="230">primary account</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="memory-proof" data-title="Memory Proof" aria-labelledby="memory-proof-title">
+        <div class="frame grid-2">
+          <div class="split-head">
+            <p class="eyebrow">04A / Obsidian Proof</p>
+            <h2 id="memory-proof-title">The CRM layer exists, with linked account evidence.</h2>
+            <p class="lead muted">Linked notes, properties, backlinks, and graph edges make each account reviewable before outreach.</p>
+          </div>
+          <div class="memory-panel">
+            <div class="obsidian-proof-header">
+              <img class="obsidian-mark" src="assets/obsidian-logo-gradient.svg" alt="" aria-hidden="true" />
+              <div>
+                <strong>HubSpot-shaped associations in markdown</strong>
+                <span>live Obsidian proof layer</span>
+              </div>
+            </div>
+            <figure class="obsidian-proof-hero">
+              <img src="assets/obsidian-crm-layer-graph.png" alt="Obsidian CRM showing deal coordination, a Two Sigma company note, and graph relationships." />
+              <figcaption>Two Sigma company note + deal coordination + graph view</figcaption>
+            </figure>
+            <div class="metric-row" aria-label="Obsidian CLI evidence">
+              <span><b>20</b><span class="metric-label">markdown notes</span></span>
+              <span><b>50</b><span class="metric-label">properties</span></span>
+              <span><b>4</b><span class="metric-label">Two Sigma links</span></span>
+              <span><b>3</b><span class="metric-label">backlinks</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="routes" data-title="Routes" aria-labelledby="routes-title">
+        <div class="frame">
+          <p class="eyebrow">05 / Account Route Proposal</p>
+          <h2 id="routes-title">Make every outreach path evidence-backed before it reaches a rep.</h2>
+          <div class="route-table" aria-label="Evidence-backed outreach routes">
+            <div class="route-row"><span>Route</span><span>Signal</span><span>Proof before outreach</span></div>
+            <div class="route-row"><strong>Raised money</strong><p>Fresh capital creates workflow scale pressure.</p><p>Cala relationship graph + Specter private-market signal, source-confirmed.</p></div>
+            <div class="route-row"><strong>Investor graph</strong><p>Shared backers and board edges create a credible path.</p><p>Named relationship edge, not persona guesswork.</p></div>
+            <div class="route-row"><strong>Recent joiner</strong><p>New operator has a first-90-days change window.</p><p>Sales Navigator or LinkedIn job-change source + workflow relevance.</p></div>
+            <div class="route-row"><strong>Social intent</strong><p>Public X activity exposes competitor clients, pain, and timing.</p><p>Nitter / X capture + account-fit review before outreach.</p></div>
+            <div class="route-row"><strong>Event-led</strong><p>Organizer, attendee, sponsor, or speaker context creates a reason to talk.</p><p>Luma/event-page browser source trail + account fit.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="route-depth" data-title="Route Depth" aria-labelledby="route-depth-title">
+        <div class="frame">
+          <div class="split-head">
+            <p class="eyebrow">05A / Route Depth</p>
+            <h2 id="route-depth-title">Each route starts concise, then expands into source calls, CRM writes, and proof.</h2>
+          </div>
+          <div class="diagram depth-map" aria-label="Route depth map">
+            <svg viewBox="0 0 960 360" role="img" aria-labelledby="depth-map-title">
+              <title id="depth-map-title">Route depth map from source coverage to proof</title>
+              <defs>
+                <marker id="depth-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="rgba(255,255,255,0.46)"></path>
+                </marker>
+              </defs>
+              <path class="edge" marker-end="url(#depth-arrow)" d="M120 95 H260"></path>
+              <path class="edge" marker-end="url(#depth-arrow)" d="M390 95 H530"></path>
+              <path class="edge" marker-end="url(#depth-arrow)" d="M660 95 H800"></path>
+              <path class="edge edge-accent" marker-end="url(#depth-arrow)" d="M320 130 V205"></path>
+              <path class="edge edge-accent" marker-end="url(#depth-arrow)" d="M590 130 V205"></path>
+              <path class="edge edge-accent" marker-end="url(#depth-arrow)" d="M860 130 V205"></path>
+              <rect class="node node-accent" x="20" y="55" width="130" height="80"></rect>
+              <text x="85" y="90" text-anchor="middle">why</text>
+              <text class="muted-text" x="85" y="112" text-anchor="middle">timing graph</text>
+              <rect class="node node-accent" x="260" y="55" width="160" height="80"></rect>
+              <text x="340" y="90" text-anchor="middle">data</text>
+              <text class="muted-text" x="340" y="112" text-anchor="middle">source coverage</text>
+              <rect class="node node-accent" x="530" y="55" width="160" height="80"></rect>
+              <text x="610" y="90" text-anchor="middle">routes</text>
+              <text class="muted-text" x="610" y="112" text-anchor="middle">outreach paths</text>
+              <rect class="node node-accent" x="800" y="55" width="140" height="80"></rect>
+              <text x="870" y="90" text-anchor="middle">demo / ask</text>
+              <text class="muted-text" x="870" y="112" text-anchor="middle">review V1</text>
+              <rect class="node" x="245" y="210" width="190" height="86"></rect>
+              <text x="340" y="246" text-anchor="middle">source-flow</text>
+              <text class="muted-text" x="340" y="270" text-anchor="middle">calls, sessions, writeback</text>
+              <rect class="node" x="515" y="210" width="190" height="86"></rect>
+              <text x="610" y="246" text-anchor="middle">GTM flywheel</text>
+              <text class="muted-text" x="610" y="270" text-anchor="middle">outbound + inbound loops</text>
+              <rect class="node" x="775" y="210" width="190" height="86"></rect>
+              <text x="870" y="246" text-anchor="middle">trace / proof</text>
+              <text class="muted-text" x="870" y="270" text-anchor="middle">tool calls + evidence</text>
+              <text class="label" x="480" y="338" text-anchor="middle">source coverage becomes calls, writeback, and evidence</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="flywheel" data-title="Flywheel" aria-labelledby="flywheel-title">
+        <div class="frame">
+          <p class="eyebrow">06 / GTM Flywheel</p>
+          <h2 id="flywheel-title">How the GTM engine starts and keeps getting stronger.</h2>
+          <div class="diagram flywheel-diagram" aria-label="Compounding Hermes GTM loop">
+            <svg viewBox="0 0 1080 350" role="img" aria-labelledby="flywheel-svg-title">
+              <title id="flywheel-svg-title">Source signal to Research Hermes to Obsidian CRM to learning loop to stronger future route</title>
+              <defs>
+                <marker id="loop-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="#37c6d0"></path>
+                </marker>
+                <marker id="graph-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="rgba(255,255,255,0.46)"></path>
+                </marker>
+              </defs>
+              <path class="edge" marker-end="url(#graph-arrow)" d="M232 150 H307"></path>
+              <path class="edge" marker-end="url(#graph-arrow)" d="M497 150 H572"></path>
+              <path class="edge" marker-end="url(#graph-arrow)" d="M762 150 H837"></path>
+              <path class="edge edge-accent" marker-end="url(#loop-arrow)" d="M932 218 V286 H402 V222"></path>
+
+              <rect class="node" x="42" y="90" width="190" height="120"></rect>
+              <text x="137" y="128" text-anchor="middle">source signal</text>
+              <text class="muted-text" x="137" y="152" text-anchor="middle">account, people, event, graph</text>
+              <text class="muted-text" x="137" y="176" text-anchor="middle">seed route surface</text>
+
+              <rect class="node node-accent" x="307" y="90" width="190" height="120"></rect>
+              <text x="402" y="128" text-anchor="middle">Research Hermes</text>
+              <text class="muted-text" x="402" y="152" text-anchor="middle">resolve + verify</text>
+              <text class="muted-text" x="402" y="176" text-anchor="middle">source trail</text>
+
+              <rect class="node node-accent" x="572" y="90" width="190" height="120"></rect>
+              <text x="667" y="128" text-anchor="middle">Obsidian CRM</text>
+              <text class="muted-text" x="667" y="152" text-anchor="middle">shared memory/data graph</text>
+              <text class="muted-text" x="667" y="176" text-anchor="middle">route memory</text>
+
+              <rect class="node" x="837" y="90" width="190" height="120"></rect>
+              <text x="932" y="128" text-anchor="middle">next route</text>
+              <text class="muted-text" x="932" y="152" text-anchor="middle">actionable outbound</text>
+              <text class="muted-text" x="932" y="176" text-anchor="middle">stronger future run</text>
+
+              <text class="label" x="667" y="274" text-anchor="middle">learning loop: outcomes, inbound growth, and source quality update route selection</text>
+              <text class="source-text" x="137" y="240" text-anchor="middle">Specter · Cala · Luma · Browser Use · LinkedIn Sales Navigator + LinkedIn · Nitter / X + public web surfaces</text>
+            </svg>
+          </div>
+          <div class="flywheel-notes">
+            <article><strong>Start</strong><p>Seed accounts, private-market thesis, and source inputs define the first search surface.</p></article>
+            <article><strong>Compound</strong><p>Hermes turns evidence into resolved entities, source trails, Obsidian CRM memory, routes, and reusable skills.</p></article>
+            <article><strong>Outbound</strong><p>Investor paths, recent joiners/leavers, fundraising, event context, competitor/client farming, precise opener, next action.</p></article>
+            <article><strong>Inbound</strong><p>LinkedIn / X publishing, connection requests, warming, replies, social proof, event loops, CRM feedback.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="account" data-title="Account Route" aria-labelledby="account-title">
+        <div class="frame grid-2">
+          <div>
+            <p class="eyebrow">07 / Example Account Route</p>
+            <h2 id="account-title">Two Sigma as a private-markets data-adjacent account.</h2>
+            <p class="lead muted">A route template for live review: signal, relationship path, source trail, and next action.</p>
+          </div>
+          <div class="plain-list">
+            <article><strong>Signal</strong><p>Private-market / AI data workflow target enters the research queue.</p></article>
+            <article><strong>Resolve</strong><p>Cala checks identity and graph context; Specter, Nitter, and Sales Navigator add company, people, and social signals when available.</p></article>
+            <article><strong>Route</strong><p>Research Hermes proposes a route-in: investor, alumni, event, recent joiner, or workflow pain.</p></article>
+            <article><strong>Action</strong><p>Human reviews the packet, edits the opener, and logs the outcome.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="account-proof" data-title="Account Proof" aria-labelledby="account-proof-title">
+        <div class="frame">
+          <p class="eyebrow">07 / Example Account Route</p>
+          <h2 id="account-proof-title">The account example is already represented in CRM memory.</h2>
+          <div class="grid-2">
+            <div class="split-head">
+              <p class="lead muted">The proof is the Obsidian record and graph structure, not the account being "hot."</p>
+            </div>
+            <div>
+              <figure class="obsidian-proof-hero">
+                <img src="assets/obsidian-crm-deal-coordination.png" alt="Obsidian CRM record for Two Sigma with deal coordination and graph view." />
+                <figcaption>example account already resolved into CRM memory</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="demo" data-title="Demo" aria-labelledby="demo-title">
+        <div class="frame grid-2">
+          <div>
+            <p class="eyebrow">08 / Hermes Route Trace</p>
+            <h2 id="demo-title">Replay how Hermes turns signals into a sourced route.</h2>
+            <p class="lead muted">Every proposed action carries its source trail, CRM writeback, and next-step rationale.</p>
+          </div>
+          <div class="plain-list">
+            <article><strong>Input</strong><p>Find a warm route into a private equity ops team.</p></article>
+            <article><strong>Calls</strong><p>Cala graph, Specter enrichment, LinkedIn/Sales Navigator review, Nitter / X capture, Luma/event-page browser verification, Obsidian writeback.</p></article>
+            <article><strong>Output</strong><p>Source-backed opener, CRM record, and reusable route rule.</p></article>
+            <article><strong>Review</strong><p>Inspect the replay trace before any outreach reaches a rep.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="demo-trace" data-title="Trace Replay" aria-labelledby="demo-trace-title">
+        <div class="frame">
+          <div class="split-head">
+            <p class="eyebrow">08A / Replay Trace</p>
+            <h2 id="demo-trace-title">Tool-call replay with sources and CRM writeback.</h2>
+          </div>
+          <div class="demo compact-demo">
+            <div class="query-row">
+              <input id="demo-query" value="Find a warm route into a private equity ops team that recently raised." aria-label="Hermes query" />
+              <button class="button" id="demo-run">Run</button>
+            </div>
+            <div class="demo-output" id="demo-output">
+              <div class="trace-shell">Hermes trace replay ready. Choose Run.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="proof" data-title="Proof" aria-labelledby="proof-title">
+        <div class="frame">
+          <p class="eyebrow">09 / Proof Packet Review</p>
+          <div class="split-head">
+            <h2 id="proof-title">What is already live after a few days.</h2>
+            <p class="lead muted">Obsidian, Hermes, and the data adapters are already producing reviewable local evidence.</p>
+          </div>
+          <div class="proof-table" aria-label="Proof packet index">
+            <div class="proof-row"><span>Proof</span><span>Evidence</span><span>Route</span></div>
+            <div class="proof-row"><strong>Obsidian CRM</strong><p>20 markdown CRM notes, 50 properties, linked Two Sigma record.</p><p>↓ Obsidian proof</p></div>
+            <div class="proof-row"><strong>Hermes Agents</strong><p>Docker-local research and CRM/ops Hermes, with Telegram ping and command surfaces.</p><p>→ Hermes proof</p></div>
+            <div class="proof-row"><strong>Data/tools</strong><p>Specter adapter, Cala graph path, LinkedIn/Sales Navigator inputs, Nitter / X and Luma Browser Use paths, Docker image.</p><p>→ Tools proof</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="proof-obsidian" data-title="Obsidian Proof" aria-labelledby="proof-obsidian-title">
+        <div class="frame">
+          <p class="eyebrow">09A / Obsidian CLI Evidence</p>
+          <h2 id="proof-obsidian-title">Obsidian is behaving like a CRM record inspector, not a screenshot folder.</h2>
+          <div class="crm-inspector" aria-label="Live Obsidian CRM record inspector">
+            <section class="crm-record-fields" aria-label="Two Sigma company and deal fields">
+              <span class="tag">Record</span>
+              <h3>Companies/Two Sigma.md</h3>
+              <dl>
+                <dt>type</dt><dd>company</dd>
+                <dt>status</dt><dd>prospect</dd>
+                <dt>domain</dt><dd>twosigma.com</dd>
+                <dt>priority</dt><dd>1</dd>
+                <dt>deal</dt><dd>two-sigma-initial-v7labs-conversation</dd>
+                <dt>next</dt><dd>Research route-in, AI/data workflows, and V7Labs fit by 2026-05-14.</dd>
+              </dl>
+              <pre class="crm-association-code"># HubSpot-shaped association fields
+cached_deal_ids:
+  - two-sigma-initial-v7labs-conversation
+primary_company_id: "two-sigma"
+associated_company_ids: []
+primary_contact_id: ""</pre>
+            </section>
+
+            <section class="crm-graph" aria-label="Two Sigma linked CRM graph">
+              <span class="tag">Queryable graph</span>
+              <h3>Links, backlinks, source trail</h3>
+              <div class="diagram crm-mini-graph">
+                <svg viewBox="0 0 520 292" role="img" aria-labelledby="crm-mini-graph-title">
+                  <title id="crm-mini-graph-title">Two Sigma company note connected to deal, source, and research activity</title>
+                  <defs>
+                    <marker id="crm-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                      <path d="M0,0 L8,4 L0,8 Z" fill="rgba(255,255,255,0.46)"></path>
+                    </marker>
+                    <marker id="crm-arrow-accent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                      <path d="M0,0 L8,4 L0,8 Z" fill="#ffbe22"></path>
+                    </marker>
+                  </defs>
+                  <path class="edge edge-accent" marker-end="url(#crm-arrow-accent)" d="M250 96 L250 136"></path>
+                  <path class="edge" marker-end="url(#crm-arrow)" d="M208 184 L122 222"></path>
+                  <path class="edge" marker-end="url(#crm-arrow)" d="M292 184 L398 222"></path>
+                  <path class="edge" marker-end="url(#crm-arrow)" d="M120 82 L190 104"></path>
+                  <rect class="node node-accent" x="170" y="28" width="160" height="68"></rect>
+                  <text x="250" y="58" text-anchor="middle">Two Sigma</text>
+                  <text class="muted-text" x="250" y="78" text-anchor="middle">company · prospect</text>
+                  <rect class="node node-accent" x="145" y="136" width="210" height="68"></rect>
+                  <text x="250" y="166" text-anchor="middle">Initial V7Labs Conversation</text>
+                  <text class="muted-text" x="250" y="186" text-anchor="middle">deal · stage=source</text>
+                  <rect class="node" x="24" y="212" width="170" height="58"></rect>
+                  <text x="109" y="240" text-anchor="middle">Target Account Request</text>
+                  <text class="muted-text" x="109" y="258" text-anchor="middle">source · cursor-chat</text>
+                  <rect class="node" x="330" y="212" width="166" height="58"></rect>
+                  <text x="413" y="240" text-anchor="middle">Research Route-In</text>
+                  <text class="muted-text" x="413" y="258" text-anchor="middle">activity · open</text>
+                  <rect class="node" x="14" y="48" width="122" height="50"></rect>
+                  <text x="75" y="78" text-anchor="middle">twosigma.com</text>
+                  <text class="label" x="264" y="122" text-anchor="middle">cached_deal_ids</text>
+                  <text class="label" x="135" y="208" text-anchor="middle">source_id</text>
+                  <text class="label" x="372" y="208" text-anchor="middle">next action</text>
+                </svg>
+              </div>
+              <div class="crm-command-strip" aria-label="Obsidian CLI command evidence">
+                <p><code>$ obsidian eval code="app.vault.getFiles().length"</code> → 26 files</p>
+                <p><code>$ obsidian files ext=md total</code> → 20 markdown CRM notes</p>
+                <p><code>$ obsidian properties total</code> → 50 properties</p>
+                <p><code>$ obsidian links file="Two Sigma" total</code> → 4 outgoing links</p>
+                <p><code>$ obsidian backlinks file="Two Sigma" counts</code> → 3 records point back</p>
+              </div>
+            </section>
+
+            <section class="crm-source-trail" aria-label="Source trail and next action">
+              <span class="tag">Trail</span>
+              <h3>Before outreach</h3>
+              <dl>
+                <dt>Backlinks</dt>
+                <dd>Activity, deal, and source notes each link back to [[Two Sigma]].</dd>
+                <dt>Source refs</dt>
+                <dd>twosigma.com + [[Two Sigma — User Target Account Request]].</dd>
+                <dt>Safety</dt>
+                <dd>No invented people. Owner/contact remain TBD until sourced.</dd>
+              </dl>
+              <ul class="crm-timeline" aria-label="Deal timeline excerpt">
+                <li><time>2026-05-13</time><span>User flagged twosigma.com as a high-priority outbound research target.</span></li>
+                <li><time>2026-05-13</time><span>Cursor created source, company, discovery deal, and research activity. No outreach happened.</span></li>
+              </ul>
+              <figure class="shot-frame crm-proof-thumb">
+                <img src="assets/obsidian-crm-deal-coordination.png" alt="Supporting screenshot of the Obsidian CRM deal coordination note and linked Two Sigma graph." />
+                <figcaption>screenshot supports the live CLI record</figcaption>
+              </figure>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="proof-hermes" data-title="Hermes Proof" aria-labelledby="proof-hermes-title">
+        <div class="frame">
+          <p class="eyebrow">09B / Hermes Evidence</p>
+          <h2 id="proof-hermes-title">Hermes is Docker-local now; Oracle Cloud is the deployment path.</h2>
+          <div class="evidence-grid">
+            <article class="evidence-card hermes-proof">
+              <span class="tag">Hermes Agents</span>
+              <h3>Research and CRM/ops agents stay split by responsibility.</h3>
+              <div class="hermes-shots">
+                <figure class="shot-frame">
+                  <img src="assets/hermes-agent-research-gtm.png" alt="Hermes Agent terminal running in local Docker for evidence-first GTM and private-market research mode." />
+                  <figcaption>research Hermes in local Docker</figcaption>
+                </figure>
+                <figure class="shot-frame">
+                  <img src="assets/hermes-agent-archap-ops.png" alt="Hermes Agent terminal running in local Docker for Archap back-office automation with tools, MCPs, and skills loaded." />
+                  <figcaption>CRM/ops Hermes split</figcaption>
+                </figure>
+              </div>
+              <div class="proof-tags">
+                <span>tools + MCPs loaded</span>
+                <span>Cala MCP</span>
+                <span>Ollama local model</span>
+                <span>Docker-local runtime</span>
+                <span>Oracle Cloud path next</span>
+              </div>
+              <p class="proof-source">Source: live Hermes terminal screenshots from the working V1.</p>
+            </article>
+            <article class="terminal">
+              <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <div class="terminal-body">
+                <strong class="accent">$ hermes run private-markets-route</strong><br />
+                <span class="ok">✓</span> V1 runtime: local Docker agents; Oracle Cloud path next<br />
+                <span class="ok">✓</span> V1 graph: Cala domain lookup + outreach paths<br />
+                <span class="ok">✓</span> V1 enrichment: Specter replay + lookup adapter<br />
+                <span class="ok">✓</span> V1 inputs: LinkedIn/Sales Navigator, Nitter / X, Luma/event-page source trails<br />
+                <span class="ok">✓</span> V1 CRM: Obsidian company / people / deal notes<br />
+                <span class="ok">✓</span> V1 agents: research-hermes + crm-hermes split<br />
+                <span class="ok">✓</span> V1 Telegram: text/audio input surface + slash-command control where supported
+              </div>
+            </article>
+            <article class="evidence-card telegram-proof">
+              <span class="tag">Telegram</span>
+              <h3>Both Hermes agents can be pinged via Telegram.</h3>
+              <div class="telegram-shots">
+                <figure class="shot-frame">
+                  <img src="assets/hermes-telegram-bot.png" alt="Telegram Hermes bot responding to text messages in a local agent session." />
+                  <figcaption>text ping into Hermes</figcaption>
+                </figure>
+                <figure class="shot-frame">
+                  <img src="assets/hermes-telegram-commands.png" alt="Telegram ArcBot session showing slash commands including reset, commands, and agents." />
+                  <figcaption>/reset · /commands · /agents</figcaption>
+                </figure>
+              </div>
+              <div class="proof-tags">
+                <span>text</span>
+                <span>audio input surface</span>
+                <span>/reset</span>
+                <span>/commands</span>
+                <span>/agents</span>
+              </div>
+              <p class="proof-source">Source: Telegram bot screenshots; audio is the declared input surface.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="proof-tools" data-title="Tools Proof" aria-labelledby="proof-tools-title">
+        <div class="frame">
+          <p class="eyebrow">09C / Data And Tool Evidence</p>
+          <h2 id="proof-tools-title">The adapters exist where the proposal depends on them.</h2>
+          <div class="evidence-grid">
+            <article class="evidence-card">
+              <span class="tag">Specter</span>
+              <h3>Private-market enrichment adapter.</h3>
+              <div class="evidence-terminal">scripts/specter_lookup.py --readiness<br />scripts/specter_harvest.py<br />.gstack/specter/session state</div>
+              <p>Browser Use session capture plus HTTP replay for company, people, investor, and signal endpoints.</p>
+            </article>
+            <article class="evidence-card">
+              <span class="tag">Cala</span>
+              <h3>Entity + relationship graph.</h3>
+              <div class="evidence-terminal">cala-lookup-by-domain<br />cala-outreach-paths<br />Cala + Specter graph_match</div>
+              <p>Domain-first disambiguation and multi-hop outreach paths reduce false matches before CRM mutation.</p>
+            </article>
+            <article class="evidence-card">
+              <span class="tag">Browser Use</span>
+              <h3>Browser capture path exists.</h3>
+              <div class="evidence-terminal">luma-gtm-harvest<br />luma-guestlist-browseruse<br />linkedin / sales-nav / nitter review</div>
+              <p>Browser Use captures and verifies pingable surfaces: Luma/event pages, LinkedIn, Sales Navigator, Nitter / X, and competitor/client pages where APIs stop.</p>
+            </article>
+            <article class="evidence-card">
+              <span class="tag">Social Inputs</span>
+              <h3>LinkedIn, Nitter, and events belong in routing.</h3>
+              <div class="evidence-terminal">linkedin + sales-nav account filters<br />nitter / X public-signal review<br />luma + competitor/client page capture</div>
+              <p>Social intent, competitor-client farming, account filters, relationship paths, job changes, and event context feed route ranking without claiming live automation.</p>
+            </article>
+            <article class="evidence-card">
+              <span class="tag">Docker</span>
+              <h3>Docker-local agents now; Oracle Cloud path next.</h3>
+              <div class="evidence-terminal">growth-hacker/hermes-browser-agent:2026.05<br />/vault/obsidian mounted<br />browser-use doctor</div>
+              <p>The browser-capable Hermes image runs locally today, mounts the repo and Obsidian vault without baking secrets, and is the unit to move to or add on Oracle Cloud.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-route="ask" data-title="Thank you" aria-labelledby="ask-title">
+        <div class="frame center">
+          <div class="cta-box">
+            <p class="eyebrow">10 / Proposal Next Step</p>
+            <h2 id="ask-title">
+              <strong>Thank You. Everything here is powered by running code — Specter, person_db, OpenCode, Cala AI.</strong>
+            </h2>
+            <table class="cta-evidence-table" aria-label="What is live and where it lives in the repo">
+              <thead>
+                <tr>
+                  <th scope="col">What's live</th>
+                  <th scope="col">Evidence</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Static proposal deck</td>
+                  <td>
+                    <a
+                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/public/index.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      >public/index.html</a
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td>Deck validation script</td>
+                  <td>
+                    <a
+                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/validate_static_deck.mjs"
+                      target="_blank"
+                      rel="noreferrer"
+                      >scripts/validate_static_deck.mjs</a
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td>Specter lookup tooling</td>
+                  <td>
+                    <a
+                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/scripts/specter_lookup.py"
+                      target="_blank"
+                      rel="noreferrer"
+                      >scripts/specter_lookup.py</a
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td>Deck screenshots (Obsidian CRM, Hermes)</td>
+                  <td>
+                    <a
+                      href="https://github.com/frankterpo/growth_hacker_v7_2026/tree/main/public/assets"
+                      target="_blank"
+                      rel="noreferrer"
+                      >public/assets/</a
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td>Hermes Docker browser agent</td>
+                  <td>
+                    <a
+                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/hermes/docker/browser-agent.Dockerfile"
+                      target="_blank"
+                      rel="noreferrer"
+                      >hermes/docker/browser-agent.Dockerfile</a
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td>Cala adapter usage (Hermes)</td>
+                  <td>
+                    <a
+                      href="https://github.com/frankterpo/growth_hacker_v7_2026/blob/main/cala/AGENTS.md"
+                      target="_blank"
+                      rel="noreferrer"
+                      >cala/AGENTS.md</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="cta-actions">
+              <a class="button" href="https://v7labs.com" target="_blank" rel="noreferrer">v7labs.com</a>
+              <a class="button secondary" href="#/home">Restart deck</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- PROPOSAL MAP: numbered columns are top-level slides; detail slides stack below. -->
+    <aside class="quest-map" id="quest-map" aria-label="Review agenda map">
+      <div class="quest-map-top">
+        <div class="quest-map-top-main">
+          <div class="quest-title" aria-hidden="true">MAP</div>
+          <p class="quest-map-compact-label" id="quest-map-compact-label" aria-hidden="true">MAP · 0%</p>
+          <div class="quest-map-progress" id="quest-map-progress" aria-live="polite">01 / 10</div>
+        </div>
+        <button
+          type="button"
+          class="quest-map-toggle"
+          id="quest-map-toggle"
+          aria-expanded="true"
+          aria-controls="quest-map-panel"
+          aria-label="Collapse agenda map"
+        >
+          <span aria-hidden="true">−</span>
+        </button>
+      </div>
+      <div class="quest-map-panel" id="quest-map-panel">
+        <p class="quest-subtitle-line"><span id="quest-mode">↳ THESIS</span></p>
+        <p class="quest-breadcrumb" id="quest-breadcrumb">Home / thesis</p>
+        <div class="map-grid-scroll" id="map-grid-scroll">
+          <div class="map-grid" id="map-grid" aria-label="Proposal route grid"></div>
+        </div>
+        <div class="quest-legend" aria-hidden="true"><span>proposal →</span><span>↓ build</span></div>
+      </div>
+    </aside>
+
+    <button class="nav-arrow prev" id="prev" type="button" aria-label="Previous slide"></button>
+    <button class="nav-arrow next" id="next" type="button" aria-label="Next slide"></button>
+    <div class="slide-counter" id="counter">01 / 19</div>
+    <div class="nav-hint">Navigate: → next review area | ↓ detail | ↑ back up | Space advance</div>
+
+    <dialog
+      id="obsidian-proof-lightbox"
+      class="obsidian-lightbox"
+      aria-modal="true"
+      aria-label="Expanded deck image"
+    >
+      <div class="obsidian-lightbox-scrim" aria-hidden="true"></div>
+      <div class="obsidian-lightbox-inner">
+        <img id="obsidian-proof-lightbox-img" alt="" decoding="async" />
+      </div>
+    </dialog>
+
+    <script>
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const routes = slides.map((slide) => slide.dataset.route);
+      let currentIndex = 0;
+      const routeHistory = [];
+      let isHistoryNavigation = false;
+      const visitedStorageKey = "v7-proposal-map-visited";
+      const maxVisitedSlideIndexKey = "v7-deck-max-visited-slide-index";
+      const questMapCollapsedStorageKey = "quest-map-collapsed";
+
+      const questNodes = [
+        {
+          route: "home",
+          coordinate: "01",
+          parent: null,
+          agenda: "Home / thesis",
+          title: "Home: V7 GTM Engine thesis"
+        },
+        {
+          route: "why",
+          coordinate: "02",
+          parent: null,
+          agenda: "Timing-graph lens",
+          title: "Proposal premise: GTM as timing graph, not only lists"
+        },
+        {
+          route: "data",
+          coordinate: "03",
+          parent: null,
+          agenda: "Data sources",
+          title: "Sources: Specter, Cala, Luma, Nitter, LinkedIn Sales Navigator, Browser Use"
+        },
+        {
+          route: "source-flow",
+          coordinate: "03A",
+          parent: "data",
+          agenda: "Source flow",
+          title: "Source-to-CRM flow: data to Hermes to Obsidian"
+        },
+        {
+          route: "agents",
+          coordinate: "04",
+          parent: null,
+          agenda: "Hermes agents",
+          title: "Hermes agents: research Hermes and CRM/ops Hermes"
+        },
+        {
+          route: "memory",
+          coordinate: "05",
+          parent: null,
+          agenda: "Obsidian memory",
+          title: "Obsidian CRM entity graph"
+        },
+        {
+          route: "memory-proof",
+          coordinate: "05A",
+          parent: "memory",
+          agenda: "Obsidian proof",
+          title: "Obsidian CRM screenshot and CLI evidence"
+        },
+        {
+          route: "routes",
+          coordinate: "06",
+          parent: null,
+          agenda: "Account routes",
+          title: "Account route review: private markets and PE paths"
+        },
+        {
+          route: "route-depth",
+          coordinate: "06A",
+          parent: "routes",
+          agenda: "Depth map",
+          title: "Route depth map: source calls, writeback, proof"
+        },
+        {
+          route: "flywheel",
+          coordinate: "07",
+          parent: null,
+          agenda: "GTM flywheel",
+          title: "GTM flywheel: outbound and inbound loops fed by shared memory"
+        },
+        {
+          route: "account",
+          coordinate: "08",
+          parent: null,
+          agenda: "PE route example",
+          title: "Example account route: private markets/private equity"
+        },
+        {
+          route: "account-proof",
+          coordinate: "08A",
+          parent: "account",
+          agenda: "Account proof",
+          title: "Account route proof in Obsidian CRM"
+        },
+        {
+          route: "demo",
+          coordinate: "09",
+          parent: null,
+          agenda: "Replay trace",
+          title: "Replay demo: tool calls, outputs, and CRM writeback"
+        },
+        {
+          route: "demo-trace",
+          coordinate: "09A",
+          parent: "demo",
+          agenda: "Trace replay",
+          title: "Replay trace: tool calls, outputs, and CRM writeback"
+        },
+        {
+          route: "proof",
+          coordinate: "09B",
+          parent: "demo",
+          agenda: "Proof packet",
+          title: "Proof: screenshots, Docker/Hermes assets, CLI evidence"
+        },
+        {
+          route: "proof-obsidian",
+          coordinate: "09C",
+          parent: "proof",
+          agenda: "Obsidian proof",
+          title: "Proof: Obsidian screenshots and CLI evidence"
+        },
+        {
+          route: "proof-hermes",
+          coordinate: "09D",
+          parent: "proof",
+          agenda: "Hermes proof",
+          title: "Proof: Hermes terminal and Telegram screenshots"
+        },
+        {
+          route: "proof-tools",
+          coordinate: "09E",
+          parent: "proof",
+          agenda: "Tools proof",
+          title: "Proof: Specter, Cala, Nitter, Sales Navigator, Browser Use, Docker"
+        },
+        {
+          route: "ask",
+          coordinate: "10",
+          parent: null,
+          agenda: "Thank you · repo evidence",
+          title: "Thank you — Specter, Cala, Hermes, deck sources"
+        }
+      ];
+
+      function parseCoordinate(coordinate) {
+        const [, column, detail = ""] = coordinate.match(/^(\d+)([A-Z]?)$/) || [];
+        return {
+          column: Number(column),
+          depth: detail ? detail.charCodeAt(0) - 64 : 0
+        };
+      }
+
+      function compareCoordinates(a, b) {
+        const left = parseCoordinate(a);
+        const right = parseCoordinate(b);
+        return left.column - right.column || left.depth - right.depth;
+      }
+
+      const questNodeByRoute = new Map(questNodes.map((node) => [node.route, node]));
+      const childrenByParent = questNodes.reduce((children, node) => {
+        if (!node.parent) return children;
+        if (!children.has(node.parent)) children.set(node.parent, []);
+        children.get(node.parent).push(node);
+        return children;
+      }, new Map());
+      for (const list of childrenByParent.values()) {
+        list.sort((a, b) => compareCoordinates(a.coordinate, b.coordinate));
+      }
+      const topLevelNodes = questNodes
+        .filter((node) => !node.parent)
+        .sort((a, b) => compareCoordinates(a.coordinate, b.coordinate));
+      const mapGrid = document.getElementById("map-grid");
+      const mapGridScroll = document.getElementById("map-grid-scroll");
+
+      let modalOpen = false;
+      const obsidianProofLightbox = document.getElementById("obsidian-proof-lightbox");
+      const obsidianProofLightboxImg = document.getElementById("obsidian-proof-lightbox-img");
+      const obsidianLightboxScrim = obsidianProofLightbox.querySelector(".obsidian-lightbox-scrim");
+      let obsidianLightboxTrigger = null;
+
+      function openObsidianLightbox(img) {
+        obsidianLightboxTrigger = img;
+        modalOpen = true;
+        document.body.classList.add("modal-open");
+        obsidianProofLightboxImg.src = img.currentSrc || img.src;
+        obsidianProofLightboxImg.alt = img.alt || "";
+        img.setAttribute("aria-expanded", "true");
+        obsidianProofLightbox.showModal();
+      }
+
+      function closeObsidianLightbox() {
+        if (obsidianProofLightbox.open) obsidianProofLightbox.close();
+      }
+
+      obsidianProofLightbox.addEventListener("close", () => {
+        modalOpen = false;
+        document.body.classList.remove("modal-open");
+        if (obsidianLightboxTrigger) {
+          obsidianLightboxTrigger.setAttribute("aria-expanded", "false");
+          obsidianLightboxTrigger.focus({ preventScroll: true });
+          obsidianLightboxTrigger = null;
+        }
+      });
+
+      obsidianProofLightbox.addEventListener("click", (event) => {
+        if (event.target === obsidianLightboxScrim || event.target === obsidianProofLightboxImg) {
+          closeObsidianLightbox();
+        }
+      });
+
+      document
+        .querySelectorAll("main.deck figure.obsidian-proof-hero img, main.deck figure.shot-frame img")
+        .forEach((img) => {
+          img.setAttribute("role", "button");
+          img.setAttribute("tabindex", "0");
+          img.setAttribute("aria-expanded", "false");
+          img.setAttribute("aria-haspopup", "dialog");
+          const summary = img.alt || "Deck screenshot";
+          img.setAttribute("aria-label", `${summary} — enlarge`);
+
+          img.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            openObsidianLightbox(img);
+          });
+          img.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              openObsidianLightbox(img);
+            }
+          });
+        });
+
+      document.addEventListener(
+        "click",
+        (event) => {
+          if (!modalOpen) return;
+          const link = event.target.closest("a[href^='#']");
+          if (link) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        },
+        true,
+      );
+      const counter = document.getElementById("counter");
+      const questMode = document.getElementById("quest-mode");
+      const questMapProgress = document.getElementById("quest-map-progress");
+      const questBreadcrumb = document.getElementById("quest-breadcrumb");
+
+      function breadcrumbFor(node) {
+        if (!node) return "";
+        return [...getQuestAncestors(node).reverse(), node].map((n) => n.agenda).join(" › ");
+      }
+
+      function readVisitedRoutes() {
+        try {
+          const storedRoutes = JSON.parse(sessionStorage.getItem(visitedStorageKey) || "[]");
+          return Array.isArray(storedRoutes) ? storedRoutes.filter((route) => routes.includes(route)) : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function persistVisitedRoutes() {
+        try {
+          sessionStorage.setItem(visitedStorageKey, JSON.stringify([...visitedRoutes]));
+        } catch {
+          // Browsers can deny sessionStorage; the in-memory state still works for this visit.
+        }
+      }
+
+      function readMaxVisitedSlideIndex() {
+        try {
+          const raw = sessionStorage.getItem(maxVisitedSlideIndexKey);
+          const n = raw == null ? NaN : Number.parseInt(raw, 10);
+          return Number.isFinite(n) && n >= 0 ? n : 0;
+        } catch {
+          return 0;
+        }
+      }
+
+      function persistMaxVisitedSlideIndex() {
+        try {
+          sessionStorage.setItem(maxVisitedSlideIndexKey, String(maxVisitedSlideIndex));
+        } catch {
+          //
+        }
+      }
+
+      let maxVisitedSlideIndex = readMaxVisitedSlideIndex();
+      const visitedRoutes = new Set(readVisitedRoutes());
+
+      function seenSlideCount() {
+        const total = slides.length;
+        if (!total) return 0;
+        if (visitedRoutes.size > 0) return Math.min(total, visitedRoutes.size);
+        return Math.min(total, maxVisitedSlideIndex + 1);
+      }
+
+      function computeSeenPercent() {
+        const total = slides.length;
+        if (!total) return 0;
+        const pct = Math.round((seenSlideCount() / total) * 100);
+        return Math.min(100, Math.max(0, pct));
+      }
+
+      const questMapEl = document.getElementById("quest-map");
+      const questMapTop = questMapEl.querySelector(".quest-map-top");
+      const questMapToggle = document.getElementById("quest-map-toggle");
+      const questMapCompactLabel = document.getElementById("quest-map-compact-label");
+
+      function readQuestMapCollapsed() {
+        try {
+          return sessionStorage.getItem(questMapCollapsedStorageKey) === "1";
+        } catch {
+          return false;
+        }
+      }
+
+      function persistQuestMapCollapsed(collapsed) {
+        try {
+          sessionStorage.setItem(questMapCollapsedStorageKey, collapsed ? "1" : "0");
+        } catch {
+          //
+        }
+      }
+
+      function updateQuestMapSeenUi() {
+        const pct = computeSeenPercent();
+        const pctLabel = `${pct}%`;
+        const n = seenSlideCount();
+        questMapCompactLabel.textContent = `MAP · ${pctLabel}`;
+        const collapsed = questMapEl.classList.contains("quest-map-collapsed");
+        const detail = collapsed
+          ? `Collapsed. Seen ${pctLabel} (${n} of ${slides.length} slides, unique visits this session; reopening does not lower). Expand map.`
+          : `Seen ${pctLabel} (${n} of ${slides.length} slides, union of visits; reopening does not lower). Collapse to compact MAP.`;
+        questMapEl.setAttribute("aria-label", `Review agenda map. ${detail}`);
+      }
+
+      function applyQuestMapCollapsed(collapsed) {
+        questMapEl.classList.toggle("quest-map-collapsed", collapsed);
+        questMapToggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+        questMapToggle.setAttribute("aria-label", collapsed ? "Expand agenda map" : "Collapse agenda map");
+        const sym = questMapToggle.querySelector("span[aria-hidden='true']");
+        if (sym) sym.textContent = collapsed ? "+" : "−";
+        persistQuestMapCollapsed(collapsed);
+        updateQuestMapSeenUi();
+      }
+
+      applyQuestMapCollapsed(readQuestMapCollapsed());
+
+      questMapToggle.addEventListener("click", (event) => {
+        event.stopPropagation();
+        applyQuestMapCollapsed(!questMapEl.classList.contains("quest-map-collapsed"));
+      });
+
+      questMapTop.addEventListener("click", (event) => {
+        if (!questMapEl.classList.contains("quest-map-collapsed")) return;
+        if (questMapToggle.contains(event.target)) return;
+        applyQuestMapCollapsed(false);
+      });
+
+      function columnNodesFor(topNode) {
+        const { column } = parseCoordinate(topNode.coordinate);
+        return questNodes
+          .filter((node) => parseCoordinate(node.coordinate).column === column)
+          .sort((a, b) => compareCoordinates(a.coordinate, b.coordinate));
+      }
+
+      topLevelNodes.forEach((topNode) => {
+        const column = document.createElement("div");
+        column.className = "map-column";
+        column.dataset.column = String(parseCoordinate(topNode.coordinate).column);
+
+        columnNodesFor(topNode).forEach((questNode) => {
+          const cell = document.createElement("button");
+          const classNames = ["map-cell", "route"];
+          if (questNode.parent) classNames.push("detail");
+          cell.type = "button";
+          cell.className = classNames.join(" ");
+          cell.dataset.route = questNode.route;
+          cell.dataset.coordinate = questNode.coordinate;
+          cell.textContent = questNode.coordinate;
+          cell.title = `${questNode.coordinate} · ${questNode.title}`;
+          cell.setAttribute("aria-label", `${questNode.coordinate}: ${questNode.title}`);
+          column.appendChild(cell);
+        });
+
+        mapGrid.appendChild(column);
+      });
+
+      function routeToIndex(hash) {
+        const clean = hash.replace(/^#\/?/, "") || "home";
+        const aliases = {
+          cta: "ask",
+          loop: "flywheel",
+          trace: "demo-trace",
+          obsidian: "proof-obsidian",
+          hermes: "proof-hermes",
+          tools: "proof-tools"
+        };
+        const route = aliases[clean] || clean;
+        const index = routes.indexOf(route);
+        return index === -1 ? 0 : index;
+      }
+
+      function syncCurrentIndexFromHash() {
+        currentIndex = routeToIndex(window.location.hash);
+      }
+
+      function goToRoute(route) {
+        const index = routes.indexOf(route);
+        if (index !== -1) goTo(index);
+      }
+
+      function currentQuestNode() {
+        return questNodeByRoute.get(routes[currentIndex]);
+      }
+
+      function getQuestAncestors(node) {
+        const ancestors = [];
+        let parentRoute = node.parent;
+        while (parentRoute) {
+          const parent = questNodeByRoute.get(parentRoute);
+          if (!parent) break;
+          ancestors.push(parent);
+          parentRoute = parent.parent;
+        }
+        return ancestors;
+      }
+
+      function topLevelRouteFor(node) {
+        if (!node || !node.parent) return node?.route;
+        let parent = questNodeByRoute.get(node.parent);
+        while (parent && parent.parent) {
+          parent = questNodeByRoute.get(parent.parent);
+        }
+        return parent?.route || node.route;
+      }
+
+      function moveHorizontal(direction) {
+        const node = currentQuestNode();
+        if (!node) return;
+
+        const topRoute = topLevelRouteFor(node);
+        const peerIndex = topLevelNodes.findIndex((peer) => peer.route === topRoute);
+        const nextPeer = topLevelNodes[peerIndex + direction];
+        if (nextPeer) goToRoute(nextPeer.route);
+      }
+
+      function moveDown() {
+        const node = currentQuestNode();
+        if (!node) return;
+        const topNode = questNodeByRoute.get(topLevelRouteFor(node));
+        const columnNodes = topNode ? columnNodesFor(topNode) : [];
+        const columnIndex = columnNodes.findIndex((columnNode) => columnNode.route === node.route);
+        const nextNode = columnNodes[columnIndex + 1];
+        if (nextNode) goToRoute(nextNode.route);
+      }
+
+      function moveUp() {
+        const node = currentQuestNode();
+        if (!node) return;
+        const topNode = questNodeByRoute.get(topLevelRouteFor(node));
+        const columnNodes = topNode ? columnNodesFor(topNode) : [];
+        const columnIndex = columnNodes.findIndex((columnNode) => columnNode.route === node.route);
+        const previousNode = columnNodes[columnIndex - 1];
+        if (previousNode) goToRoute(previousNode.route);
+      }
+
+      function fallbackBackRoute() {
+        const node = currentQuestNode();
+        if (!node) return null;
+        if (node.route === "home") return null;
+        if (!node.parent) {
+          const peerIndex = topLevelNodes.findIndex((peer) => peer.route === node.route);
+          return topLevelNodes[peerIndex - 1]?.route || "home";
+        }
+        if (node.parent) return node.parent;
+        return routes[currentIndex - 1] || null;
+      }
+
+      function moveBack() {
+        const previousRoute = routeHistory.pop();
+        if (previousRoute) {
+          isHistoryNavigation = true;
+          goToRoute(previousRoute);
+          return;
+        }
+
+        const fallbackRoute = fallbackBackRoute();
+        if (fallbackRoute) goToRoute(fallbackRoute);
+      }
+
+      function goTo(index, replace = false) {
+        if (modalOpen) return;
+        const bounded = (index + slides.length) % slides.length;
+        const previousRoute = routes[currentIndex];
+        const nextRoute = routes[bounded];
+        if (!replace && !isHistoryNavigation && previousRoute && previousRoute !== nextRoute) {
+          routeHistory.push(previousRoute);
+        }
+        isHistoryNavigation = false;
+        currentIndex = bounded;
+
+        slides.forEach((slide, slideIndex) => {
+          slide.classList.toggle("active", slideIndex === currentIndex);
+          slide.classList.toggle("back", slideIndex < currentIndex);
+        });
+
+        document.querySelectorAll(".map-cell").forEach((cell) => {
+          cell.classList.remove("active", "ancestor", "descendant", "visited");
+          cell.removeAttribute("aria-current");
+        });
+        visitedRoutes.add(routes[bounded]);
+        maxVisitedSlideIndex = Math.max(maxVisitedSlideIndex, bounded);
+        persistVisitedRoutes();
+        persistMaxVisitedSlideIndex();
+
+        const activeNode = currentQuestNode();
+        const activeCell = activeNode ? document.querySelector(`[data-coordinate="${activeNode.coordinate}"]`) : null;
+        if (activeCell) {
+          activeCell.classList.add("active");
+          activeCell.setAttribute("aria-current", "step");
+        }
+        visitedRoutes.forEach((route) => {
+          const visitedNode = questNodeByRoute.get(route);
+          const visitedCell = visitedNode ? document.querySelector(`[data-coordinate="${visitedNode.coordinate}"]`) : null;
+          if (visitedCell) visitedCell.classList.add("visited");
+        });
+        if (activeNode) {
+          getQuestAncestors(activeNode).forEach((ancestor) => {
+            const ancestorCell = document.querySelector(`[data-coordinate="${ancestor.coordinate}"]`);
+            if (ancestorCell) ancestorCell.classList.add("ancestor");
+          });
+          const topNode = questNodeByRoute.get(topLevelRouteFor(activeNode));
+          const columnNodes = topNode ? columnNodesFor(topNode) : [];
+          const activeColumnIndex = columnNodes.findIndex((node) => node.route === activeNode.route);
+          columnNodes.slice(activeColumnIndex + 1).forEach((descendant) => {
+            const descendantCell = document.querySelector(`[data-coordinate="${descendant.coordinate}"]`);
+            if (descendantCell) descendantCell.classList.add("descendant");
+          });
+        }
+
+        counter.textContent = `${String(currentIndex + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+        questMapProgress.textContent = activeNode
+          ? `${activeNode.coordinate} / ${String(topLevelNodes.length).padStart(2, "0")}`
+          : `${String(currentIndex + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
+        questBreadcrumb.textContent = activeNode ? breadcrumbFor(activeNode) : "";
+        if (activeNode && activeNode.parent) {
+          const topNode = questNodeByRoute.get(topLevelRouteFor(activeNode));
+          questMode.textContent = `↳ ${activeNode.coordinate} · ${topNode.agenda.toUpperCase()}`;
+        } else {
+          questMode.textContent =
+            currentIndex === 0 ? "↳ 01 · THESIS" : activeNode ? `↳ ${activeNode.coordinate} · ${activeNode.agenda.toUpperCase()}` : "↳ THESIS";
+        }
+        if (activeCell && mapGridScroll) {
+          const behavior = replace ? "instant" : "smooth";
+          requestAnimationFrame(() =>
+            activeCell.scrollIntoView({
+              block: "nearest",
+              inline: "center",
+              behavior: behavior === "instant" ? "auto" : behavior
+            })
+          );
+        }
+
+        const nextHash = `#/${routes[currentIndex]}`;
+        if (window.location.hash !== nextHash) {
+          if (replace) {
+            history.replaceState(null, "", nextHash);
+          } else {
+            window.location.hash = nextHash;
+          }
+        }
+
+        updateQuestMapSeenUi();
+      }
+
+      function next() {
+        goTo(currentIndex + 1);
+      }
+
+      function prev() {
+        goTo(currentIndex - 1);
+      }
+
+      document.getElementById("next").addEventListener("click", next);
+      document.getElementById("prev").addEventListener("click", prev);
+      mapGrid.addEventListener("click", (event) => {
+        if (modalOpen) return;
+        const route = event.target.closest(".map-cell.route")?.dataset.route;
+        if (route) goToRoute(route);
+      });
+      window.addEventListener("hashchange", () => {
+        if (modalOpen) {
+          const expected = `#/${routes[currentIndex]}`;
+          if (window.location.hash !== expected) history.replaceState(null, "", expected);
+          return;
+        }
+        goTo(routeToIndex(window.location.hash), true);
+      });
+      window.addEventListener("keydown", (event) => {
+        if (modalOpen) return;
+        if (event.target.matches("input, textarea")) return;
+        if (event.target.matches("button") && [" ", "Enter"].includes(event.key)) return;
+        syncCurrentIndexFromHash();
+        if (["ArrowRight", " ", "PageDown"].includes(event.key)) {
+          event.preventDefault();
+          if (event.key === "ArrowRight") {
+            moveHorizontal(1);
+          } else {
+            next();
+          }
+        }
+        if (["ArrowLeft", "PageUp"].includes(event.key)) {
+          event.preventDefault();
+          if (event.key === "ArrowLeft") {
+            moveBack();
+          } else {
+            prev();
+          }
+        }
+        if (event.key === "ArrowDown") {
+          event.preventDefault();
+          moveDown();
+        }
+        if (event.key === "ArrowUp") {
+          event.preventDefault();
+          moveUp();
+        }
+      });
+
+      const demoOutput = document.getElementById("demo-output");
+      const demoQuery = document.getElementById("demo-query");
+      const demoRun = document.getElementById("demo-run");
+      let demoTimers = [];
+
+      function clearDemoTimers() {
+        demoTimers.forEach((timer) => clearTimeout(timer));
+        demoTimers = [];
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function prettyJson(value) {
+        return escapeHtml(JSON.stringify(value, null, 2));
+      }
+
+      const demoTraceSteps = [
+        {
+          tool: "mcp_cala_entity_search",
+          intent: "resolve target account",
+          input: {
+            name: "private equity ops team",
+            entity_types: ["Company", "Organization"],
+            limit: 3
+          },
+          output:
+            "Resolved candidate account: Northstar Ops Platform - type: Company - entity_id: demo-company-7f42. Next hop: inspect investor and executive edges.",
+          raw: {
+            entities: [
+              {
+                id: "demo-company-7f42",
+                name: "Northstar Ops Platform",
+                entity_type: "Company",
+                description: "Private equity operations platform target for route review."
+              }
+            ],
+            replay_note: "Uses the V1 Cala pattern from cala/AGENTS.md; IDs are demo-safe."
+          }
+        },
+        {
+          tool: "mcp_cala_retrieve_entity",
+          intent: "find warm graph paths",
+          input: {
+            entity_id: "demo-company-7f42",
+            relationships: {
+              incoming: {
+                INVESTED_IN: { limit: 5 },
+                IS_BOARD_MEMBER_OF: { limit: 3 },
+                IS_EXECUTIVE_OF: { limit: 3 }
+              }
+            }
+          },
+          output:
+            "Warm path found: investor -> operating partner -> portfolio data leader. Route strength: strong, because it uses a named graph edge instead of a cold persona guess.",
+          raw: {
+            relationships: {
+              incoming: {
+                INVESTED_IN: [
+                  { id: "demo-investor-91aa", name: "Alder Growth", entity_type: "Organization" }
+                ],
+                IS_BOARD_MEMBER_OF: [
+                  { id: "demo-person-203d", name: "Maya Chen", entity_type: "Person" }
+                ]
+              }
+            },
+            next_graph_hops: [
+              "mcp_cala_entity_introspection({ entity_id: 'demo-person-203d' })",
+              "mcp_cala_retrieve_entity({ entity_id: 'demo-investor-91aa', relationships: { outgoing: { INVESTED_IN: { limit: 10 } } } })"
+            ]
+          }
+        },
+        {
+          tool: "hermes-specter-enrich",
+          intent: "add private-market signal",
+          input: {
+            command: "python3 scripts/specter_lookup.py --kind org --name 'Northstar Ops Platform'",
+            readiness_gate: "ready | partial_ready | not_ready"
+          },
+          output:
+            "Signal found: hiring spike around portfolio operations, reported client expansion, and a recent platform investment note. Confidence: review, not fabricated.",
+          raw: {
+            status: "ok",
+            signals: ["talent_growth", "client_expansion", "investor_tie"],
+            source_trail: [
+              "scripts/SPECTER_LOOKUP.md",
+              "hermes/skills/research/hermes-specter-enrich/SKILL.md"
+            ],
+            safety: "Browser session and JWT stay local; Specter access remains controlled."
+          }
+        },
+        {
+          tool: "browser-use eval",
+          intent: "check public source trail",
+          input: {
+            url: "https://example.com/portfolio-ops-announcement",
+            claim: "recently raised / platform ops expansion",
+            mode: "offline replay"
+          },
+          output:
+            "Public claim verified for the packet: announcement page + investor quote + portfolio ops hiring language captured as source refs.",
+          raw: {
+            verified_claims: [
+              "fresh capital available",
+              "ops platform expansion",
+              "data workflow pain is explicit"
+            ],
+            source_refs: [
+              "Source/Northstar capital announcement",
+              "Source/Alder portfolio operations note"
+            ],
+            note: "Presentation replay mirrors the Browser Use/Luma/Specter capture pattern without network access."
+          }
+        },
+        {
+          tool: "obsidian create",
+          intent: "CRM writeback",
+          input: {
+            vault_root: "$OBSIDIAN_VAULT",
+            notes: ["Companies/Northstar Ops Platform.md", "Deals/Northstar warm route.md", "Sources/Alder ops signal.md"],
+            contract: "obsidian-crm-data-contract"
+          },
+          output:
+            "CRM note created: deal stage = researched, next action = ask for intro review, source trail attached, company/person/deal links added.",
+          raw: {
+            deal_frontmatter: {
+              type: "deal",
+              stage: "researched",
+              status: "discovery",
+              next_action: "Ask Maya Chen for a 15-minute review of the ops workflow graph.",
+              source_refs: ["[[Sources/Alder ops signal]]", "[[Sources/Northstar announcement]]"],
+              hermes_profile: "archap"
+            },
+            links: ["[[Companies/Northstar Ops Platform]]", "[[People/Maya Chen]]", "[[Deals/Northstar warm route]]"]
+          }
+        },
+        {
+          tool: "hermes.route_synthesis",
+          intent: "learn the route",
+          input: {
+            pattern: "PE ops + fresh capital + portfolio data workflow",
+            feedback_sink: "skills/reference + Obsidian timeline",
+            live_api: false
+          },
+          output:
+            "Learning recorded: promote this route pattern when Cala shows investor edges and Specter shows ops hiring or client expansion.",
+          raw: {
+            learned_rule: "If PE/platform ops + fresh capital + data workflow language, rank investor warm intro above cold VP Ops outreach.",
+            next_action: "Human approves opener, then Hermes logs outcome for the next routing pass.",
+            replay_label: "Replay from V1 run pattern; no secrets or live browser calls in this deck."
+          }
+        }
+      ];
+
+      const traceSummary = {
+        target: "Northstar Ops Platform",
+        warm_path: "Alder Growth -> Maya Chen -> portfolio ops buyer",
+        next_action: "Ask for a live review of the workflow graph draft.",
+        opener:
+          "Saw the platform ops expansion and the shared Alder path. I built a small graph that surfaces where portfolio ops data workflows are becoming urgent. Worth 15 minutes to inspect the live V1?",
+        source_trail: ["Cala graph edge", "Specter private-market signal", "Browser Use public verification", "Obsidian CRM note"]
+      };
+
+      function renderTrace(stepCount, runningIndex = -1, expandedIndex = -1, query = "") {
+        const stepHtml = demoTraceSteps
+          .map((step, index) => {
+            const isVisible = index < stepCount;
+            const isRunning = index === runningIndex;
+            const state = isRunning ? "running" : isVisible ? "complete" : "queued";
+            const expanded = index === expandedIndex ? " expanded" : "";
+            const output = isVisible ? step.output : "Waiting for prior tool output...";
+
+            return `
+              <article class="trace-step ${state}${expanded}" data-trace-step="${index}">
+                <button class="trace-step-header" type="button" aria-expanded="${index === expandedIndex}">
+                  <span class="trace-index">${index + 1}</span>
+                  <span class="trace-title">
+                    <strong>${escapeHtml(step.tool)}</strong>
+                    <span>${escapeHtml(step.intent)}</span>
+                  </span>
+                  <span class="trace-state">${escapeHtml(state)}</span>
+                </button>
+                <div class="trace-output">${escapeHtml(output)}</div>
+                <pre class="trace-raw">input ${prettyJson(step.input)}
+
+output ${prettyJson(step.raw)}</pre>
+              </article>
+            `;
+          })
+          .join("");
+
+        const summary =
+          stepCount >= demoTraceSteps.length
+            ? `<section class="trace-summary">
+                <b>Final CRM result</b>
+                <span>Target: ${escapeHtml(traceSummary.target)}</span>
+                <span>Warm path: ${escapeHtml(traceSummary.warm_path)}</span>
+                <span>Next action: ${escapeHtml(traceSummary.next_action)}</span>
+                <span>Suggested opener: "${escapeHtml(traceSummary.opener)}"</span>
+                <span>Source trail: ${escapeHtml(traceSummary.source_trail.join(" -> "))}</span>
+              </section>`
+            : "";
+
+        demoOutput.innerHTML = `
+          <div class="trace-meta">
+            ${query ? `<span><strong>query</strong> ${escapeHtml(query)}</span>` : ""}
+            <span><strong>mode</strong> trace replay from V1 run pattern</span>
+            <span><strong>network</strong> off</span>
+            <span><strong>secrets</strong> none in browser</span>
+          </div>
+          ${stepHtml}
+          ${summary}
+        `;
+      }
+
+      demoOutput.addEventListener("click", (event) => {
+        const button = event.target.closest(".trace-step-header");
+        if (!button) return;
+        const step = button.closest(".trace-step");
+        if (!step || step.classList.contains("queued")) return;
+        step.classList.toggle("expanded");
+        button.setAttribute("aria-expanded", step.classList.contains("expanded"));
+      });
+
+      demoRun.addEventListener("click", () => {
+        const query = demoQuery.value.trim() || "Find a warm route into a private-market ops account.";
+        clearDemoTimers();
+        demoRun.disabled = true;
+        demoRun.textContent = "Running";
+        renderTrace(0, -1, -1, query);
+
+        demoTraceSteps.forEach((_, index) => {
+          demoTimers.push(
+            setTimeout(() => {
+              renderTrace(index + 1, index, -1, query);
+              demoOutput.scrollTop = demoOutput.scrollHeight;
+            }, 360 + index * 560),
+          );
+        });
+
+        demoTimers.push(
+          setTimeout(() => {
+            renderTrace(demoTraceSteps.length, -1, -1, query);
+            demoOutput.scrollTop = demoOutput.scrollHeight;
+            demoRun.disabled = false;
+            demoRun.textContent = "Run";
+          }, 620 + demoTraceSteps.length * 560),
+        );
+      });
+
+      goTo(routeToIndex(window.location.hash), true);
+    </script>
   </body>
 </html>
